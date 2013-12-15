@@ -32,8 +32,8 @@ class ViewCollection extends RouteCollection
         $this->routes[] = $route;
         
         uasort($this->routes, function(&$a, &$b){
-            $v1 = $a.get('view-priority', 0);
-            $v2 = $b.get('view-priority', 0);
+            $v1 = $a->get('view-priority', 0);
+            $v2 = $b->get('view-priority', 0);
             if($v1 === $v2)
             {
                 return 0;
