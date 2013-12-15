@@ -36,7 +36,7 @@ class EngineResolver
     
     public function register($extension, Closure $resolver)
     {
-        $extension = '`' . preg_quote($extension, '`') . '$`';
+        $extension = '`.+' . preg_quote('.' . $extension . '.php', '`') . '$`';
         
         $this->resolvers[$extension] = array(
             'resolver' => $resolver,
