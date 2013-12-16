@@ -21,32 +21,31 @@
 namespace Opis\View\Routing;
 
 use Opis\Routing\Route;
+use Opis\Routing\Router;
 use Opis\Routing\FilterInterface;
 use Opis\Routing\Compiler;
 
-class ViewFilter
+class ViewFilter implements FilterInterface
 {
     
     protected $compiler;
     
-    protected $view;
-    
-    public function __construct($view)
+    public function __construct()
     {
-        $this->view = $view;
         $this->compiler = new Compiler('{', '}', ':', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
     }
     
-    public function match(Route $route)
+    public function match(Router $router, Route $route)
     {
         $expression = $this->compiler->expression($route->getPath(), $route->getWildcards());
+        $view = $router->getView();
         
-        if(!preg_match($expression->delimit(), $this->view))
+        if(!preg_match($expression->delimit(), $view))
         {
             return false;
         }
         
-        $values = $expression->extract($this->view, $route->getDefaults());
+        $values = $expression->extract($view, $route->getDefaults());
         
         foreach($route->getBindings() as $name => $check)
         {

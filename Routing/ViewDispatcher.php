@@ -20,23 +20,18 @@
 
 namespace Opis\View\Routing;
 
-use Opis\Routing\DispatcherInterface;
 use Opis\Routing\Route;
+use Opis\Routing\Router;
+use Opis\Routing\DispatcherInterface;
 use Opis\View\Engines\EngineResolver;
 
 class ViewDispatcher implements DispatcherInterface
 {
-    protected $view;
     
-    public function __construct($view)
-    {
-        $this->view = $view;
-    }
-    
-    public function dispatch(Route $route)
+    public function dispatch(Router $router, Route $route)
     {
         $expression = $route->get('expression');
-        $values = $expression->extract($this->view, $route->getDefaults());
+        $values = $expression->extract($router->getView(), $route->getDefaults());
         return call_user_func_array($route->getAction(), $values);
     }
     

@@ -20,36 +20,23 @@
 
 namespace Opis\View\Routing;
 
-use Opis\Routing\RouteCollection;
+use Opis\Routing\Route;
+use Opis\Routing\Router;
+use Opis\Routing\DispatcherResolverInterface;
 
-class ViewCollection extends RouteCollection
+class DispatcherResolver implements DispatcherResolverInterface
 {
     
-    public function add(ViewRoute $route, $priority = 0)
+    protected $dispatcher;
+    
+    public function __construct()
     {
-        $route->set('view-priority', $priority);
-        
-        $this->collection[] = $route;
-        
-        uasort($this->collection, function(&$a, &$b){
-            $v1 = $a->get('view-priority', 0);
-            $v2 = $b->get('view-priority', 0);
-            if($v1 === $v2)
-            {
-                return 0;
-            }
-            return $v1 < $v2 ? 1 : -1;
-        });
-        
-        return $route;
+        $this->dispatcher = new ViewDispatcher();
     }
     
-    public function offsetSet($offset, $value)
+    public function resolve(Router $router, Route $route)
     {
-        if(is_null($offset))
-        {
-            $offset = 0;
-        }
-        $this->add($value, (int) $offset);
+        return $this->dispatcher;
     }
+    
 }

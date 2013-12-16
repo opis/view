@@ -21,37 +21,22 @@
 namespace Opis\View\Routing;
 
 use Opis\Routing\Router;
+use Opis\Routing\FilterCollection;
+use Opis\Routing\DispatcherResolverInterface;
 
 class ViewRouter extends Router
 {
-    
-    protected $filterList;
-    
-    protected $dispatcher;
-    
+        
     protected $view;
     
-    public function __construct($view, ViewCollection $colection)
+    public function __construct($view, DispatcherResolverInterface $resolver, FilterCollection $filters, ViewCollection $collection)
     {
-        parent::__construct($colection);
         $this->view = $view;
+        parent::__construct($resolver, $filters, $collection);
     }
     
-    protected function dispatcher()
+    public function getView()
     {
-        if($this->dispatcher === null)
-        {
-            $this->dispatcher = new ViewDispatcher($this->view);
-        }
-        return $this->dispatcher;
-    }
-    
-    protected function filters()
-    {
-        if($this->filterList === null)
-        {
-            $this->filterList = array(new ViewFilter($this->view));
-        }
-        return $this->filterList;
+        return $this->view;
     }
 }

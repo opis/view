@@ -24,13 +24,18 @@ use Closure;
 use Opis\View\Routing\ViewCollection;
 use Opis\View\Routing\ViewRoute;
 use Opis\View\Routing\ViewRouter;
+use Opis\View\Routing\ViewFilter;
+use Opis\View\Routing\DispatcherResolver;
+use Opis\Routing\FilterCollection;
 
 class View
 {
     
     protected $resolver;
     
-    protected $collection;
+    protected static $filterCollection;
+    
+    protected static $dispatcherResolver;
     
     protected $insertKey;
     
@@ -49,6 +54,27 @@ class View
         $this->viewKey = (string) $viewkey;
     }
     
+    protected static function filterCollection()
+    {
+        if(static::$filterCollection === null)
+        {
+            static::$filterCollection = new FilterCollection();
+            static::$filterCollection[] = new ViewFilter();
+        }
+        
+        return static::$filterCollection;
+    }
+    
+    protected static function dispatcherResolver()
+    {
+        if(static::$dispatcherResolver === null)
+        {
+            static::$dispatcherResolver = new DispatcherResolver();
+        }
+        
+        return static::$dispatcherResolver;
+    }
+    
     public function handle($pattern, Closure $callback, $priority = 0)
     {
         return $this->collection->add(new ViewRoute($pattern, $callback), $priority);
@@ -60,8 +86,8 @@ class View
         {
             return $view;
         }
-        $router = new ViewRouter($view->viewName(), $this->collection);
-        $path = $router->execute();
+        $router = new ViewRouter($view->viewName(), static::dispatcherResolver(), static::filterCollection(), $this->collection);
+        $path = $router->route();
         $engine = $this->resolver->resolve($path);
         $arguments = $view->viewArguments();
         if($this->insertKey)
