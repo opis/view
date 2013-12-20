@@ -34,9 +34,12 @@ class EngineResolver
         $this->defaultEngine = new PHPEngine();
     }
     
-    public function register($extension, Closure $resolver)
+    public function register($extension, Closure $resolver, $isregex = false)
     {
-        $extension = '`.+' . preg_quote('.' . $extension . '.php', '`') . '$`';
+        if(!$isregex)
+        {
+            $extension = '`.+' . preg_quote('.' . $extension, '`') . '$`';
+        }
         
         $this->resolvers[$extension] = array(
             'resolver' => $resolver,
@@ -53,7 +56,7 @@ class EngineResolver
             {
                 if($engine['instance'] === null)
                 {
-                    $engine['instance'] = $engine['resolver']();
+                    $engine['instance'] = $engine['resolver']($path);
                 }
                 
                 return $engine['instance'];
