@@ -15,9 +15,8 @@
         "opis/routing": "dev-nightly"
     },
     "autoload": {
-        "psr-0": {"Opis\\View": ""}
+        "psr-0": {"Opis\\View": "lib"}
     },
-    "target-dir": "Opis/View",
     "config": {
         "preferred-install": "dist"
     },
