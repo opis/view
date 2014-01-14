@@ -47,6 +47,11 @@ class PHPEngine implements EngineInterface
             throw $e;
         }
         
-        return ob_get_clean();
+        $result = ob_get_clean();
+        
+        unset($this->path);
+        unset($this->data);
+        
+        return $result;
     }
 }
