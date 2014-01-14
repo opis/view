@@ -20,8 +20,6 @@
 
 namespace Opis\View;
 
-use Opis\View\Engines\PHPEngine;
-
 class EngineResolver
 {
     
