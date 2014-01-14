@@ -20,9 +20,9 @@
 
 namespace Opis\View;
 
-interface ViewableInterface
-{
-    function viewName();
-    
-    function viewArguments();
+use Opis\Routing\Contracts\PathInterface;
+
+interface ViewableInterface extends PathInterface
+{    
+    function arguments();
 }

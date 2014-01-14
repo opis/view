@@ -18,32 +18,17 @@
  * limitations under the License.
  * ============================================================================ */
 
-namespace Opis\View\Routing;
+namespace Opis\View;
 
-use Closure;
-use Opis\Routing\Route;
+use Opis\Routing\Collections\RouteCollection as BaseCollection;
 
-class ViewRoute extends Route
+class RouteCollection extends BaseCollection
 {
-    
-    public function __construct($view, Closure $action)
+    protected function checkType($value)
     {
-        parent::__construct($view, $action);
+        if(!($value instanceof Route))
+        {
+            throw new InvalidArgumentException('Expected \Opis\View\Route');
+        }
     }
-    
-    public function where($name, $value)
-    {
-        return $this->wildcard($name, $value);
-    }
-    
-    public function when($name, Closure $check)
-    {
-        return $this->bind($name, $check);
-    }
-    
-    public static function create($view, Closure $action)
-    {
-        return new ViewRoute($view, $action);
-    }
-    
 }

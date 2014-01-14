@@ -21,58 +21,37 @@
 namespace Opis\View;
 
 use Closure;
-use Opis\View\Routing\ViewCollection;
-use Opis\View\Routing\ViewRoute;
-use Opis\View\Routing\ViewRouter;
-use Opis\View\Routing\ViewFilter;
-use Opis\View\Routing\DispatcherResolver;
-use Opis\Routing\FilterCollection;
+use Opis\Routing\Router;
 
 class View
 {
     
     protected $resolver;
     
-    protected static $filterCollection;
-    
-    protected static $dispatcherResolver;
+    protected $collection;
     
     protected $insertKey;
     
     protected $viewKey;
     
-    public function __construct(EngineResolver $resolver, ViewCollection $collection = null, $insertKey = true, $viewkey = 'view')
+    protected static $routerInstance;
+    
+    public function __construct(RouteCollection $routes, EngineResolver $resolver, $insertKey = true, $viewkey = 'view')
     {   
-        if($collection === null)
-        {
-            $collection = new ViewCollection();
-        }
-        
         $this->resolver = $resolver;
         $this->collection = $collection;
         $this->insertKey = (bool) $insertKey;
         $this->viewKey = (string) $viewkey;
     }
     
-    protected static function filterCollection()
+    protected function router()
     {
-        if(static::$filterCollection === null)
+        if(static::$routerInstance === null)
         {
-            static::$filterCollection = new FilterCollection();
-            static::$filterCollection[] = new ViewFilter();
+            static::$routerInstance = new Router($this->collection);
         }
         
-        return static::$filterCollection;
-    }
-    
-    protected static function dispatcherResolver()
-    {
-        if(static::$dispatcherResolver === null)
-        {
-            static::$dispatcherResolver = new DispatcherResolver();
-        }
-        
-        return static::$dispatcherResolver;
+        return static::$routerInstance;
     }
     
     public function handle($pattern, Closure $callback, $priority = 0)
@@ -86,14 +65,18 @@ class View
         {
             return $view;
         }
-        $router = new ViewRouter($view->viewName(), static::dispatcherResolver(), static::filterCollection(), $this->collection);
-        $path = $router->route();
+        
+        $path = $this->router()->route($view);
+        
         $engine = $this->resolver->resolve($path);
-        $arguments = $view->viewArguments();
+        
+        $arguments = $view->arguments();
+        
         if($this->insertKey)
         {
             $arguments[$this->viewKey] = $this;
         }
+        
         return $engine->build($path, $arguments);
     }
     

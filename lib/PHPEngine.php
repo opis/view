@@ -18,38 +18,35 @@
  * limitations under the License.
  * ============================================================================ */
 
-namespace Opis\View\Routing;
+namespace Opis\View;
 
-use Opis\Routing\RouteCollection;
+use Exception;
 
-class ViewCollection extends RouteCollection
+class PHPEngine implements EngineInterface
 {
     
-    public function add(ViewRoute $route, $priority = 0)
-    {
-        $route->set('view-priority', $priority);
-        
-        $this->collection[] = $route;
-        
-        uasort($this->collection, function(&$a, &$b){
-            $v1 = $a->get('view-priority', 0);
-            $v2 = $b->get('view-priority', 0);
-            if($v1 === $v2)
-            {
-                return 0;
-            }
-            return $v1 < $v2 ? 1 : -1;
-        });
-        
-        return $route;
-    }
+    protected $path;
+    protected $data;
     
-    public function offsetSet($offset, $value)
+    public function build($path, array $data = array())
     {
-        if(is_null($offset))
+        $this->path = $path;
+        $this->data = $data;
+        
+        ob_start();
+        
+        extract($this->data);
+        
+        try
         {
-            $offset = 0;
+            include $this->path;
         }
-        $this->add($value, (int) $offset);
+        catch(Exception $e)
+        {
+            ob_get_clean();
+            throw $e;
+        }
+        
+        return ob_get_clean();
     }
 }
