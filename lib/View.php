@@ -34,29 +34,30 @@ class View
     
     protected $viewKey;
     
-    protected static $routerInstance;
+    protected $router;
     
-    public function __construct(RouteCollection $routes, EngineResolver $resolver, $insertKey = true, $viewkey = 'view')
-    {   
-        $this->resolver = $resolver;
-        $this->collection = $collection;
-        $this->insertKey = (bool) $insertKey;
-        $this->viewKey = (string) $viewkey;
-    }
+    protected $dirty = true;
     
-    protected function router()
+    public function __construct(EngineResolver $resolver = null, $insertKey = true, $viewkey = 'view')
     {
-        if(static::$routerInstance === null)
+        if($resolver === null)
         {
-            static::$routerInstance = new Router($this->collection);
+            $resolver = new EngineResolver();
         }
         
-        return static::$routerInstance;
+        $this->resolver = $resolver;
+        $this->insertKey = (bool) $insertKey;
+        $this->viewKey = (string) $viewkey;
+        $this->collection = new RouteCollection();
+        $this->router = new Router($this->collection);
     }
     
     public function handle($pattern, Closure $callback, $priority = 0)
     {
-        return $this->collection->add(new ViewRoute($pattern, $callback), $priority);
+        $route = new Route($pattern, $callback, $priority);
+        $this->collection[] = $route;
+        $this->dirty = true;
+        return $route;
     }
     
     public function render($view)
@@ -66,7 +67,13 @@ class View
             return $view;
         }
         
-        $path = $this->router()->route($view);
+        if($this->dirty)
+        {
+            $this->collection->sort();
+            $this->dirty = false;
+        }
+        
+        $path = $this->router->route($view);
         
         $engine = $this->resolver->resolve($path);
         

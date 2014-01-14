@@ -24,6 +24,20 @@ use Opis\Routing\Collections\RouteCollection as BaseCollection;
 
 class RouteCollection extends BaseCollection
 {
+    
+    public function sort()
+    {
+        uasort($this->collection, function(&$a, &$b){
+            $v1 = $a->getPriority();
+            $v2 = $b->getPriority();
+            if($v1 === $v2)
+            {
+                return 0;
+            }
+            return $v1 < $v2 ? 1 : -1;
+        });
+    }
+    
     protected function checkType($value)
     {
         if(!($value instanceof Route))

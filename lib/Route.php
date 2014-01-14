@@ -10,8 +10,11 @@ class Route extends BaseRoute
 {
     protected static $compilerInstance;
     
-    public function __construct($pattern, Closure $action)
+    protected $priority;
+    
+    public function __construct($pattern, Closure $action, $priority = 0)
     {
+        $this->priority = $priority;
         parent::__construct(new Pattern($pattern), $action, compiler());
     }
     
@@ -21,6 +24,11 @@ class Route extends BaseRoute
         {
             static::$compilerInstance = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
         }
+    }
+    
+    public function getPriority()
+    {
+        return $this->priority;
     }
     
     public function where($name, $value)
