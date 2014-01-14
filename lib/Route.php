@@ -1,10 +1,11 @@
 <?php
 
-namespace Opis\View\Routing;
+namespace Opis\View;
 
 use Closure;
 use Opis\Routing\Route as BaseRoute;
 use Opis\Routing\Pattern;
+use Opis\Routing\Compiler;
 
 class Route extends BaseRoute
 {
@@ -15,7 +16,7 @@ class Route extends BaseRoute
     public function __construct($pattern, Closure $action, $priority = 0)
     {
         $this->priority = $priority;
-        parent::__construct(new Pattern($pattern), $action, compiler());
+        parent::__construct(new Pattern($pattern), $action, static::compiler());
     }
     
     protected static function compiler()
