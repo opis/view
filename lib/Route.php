@@ -25,6 +25,8 @@ class Route extends BaseRoute
         {
             static::$compilerInstance = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
         }
+        
+        return static::$compilerInstance;
     }
     
     public function getPriority()

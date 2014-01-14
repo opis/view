@@ -75,6 +75,11 @@ class View
         
         $path = $this->router->route($view);
         
+        if($path === null)
+        {
+            return null;
+        }
+        
         $engine = $this->resolver->resolve($path);
         
         $arguments = $view->arguments();
