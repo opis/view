@@ -22,6 +22,7 @@ namespace Opis\View;
 
 use Closure;
 use Opis\Routing\Router;
+use Opis\Routing\Path;
 
 class View
 {
@@ -73,7 +74,7 @@ class View
             $this->dirty = false;
         }
         
-        $path = $this->router->route($view);
+        $path = $this->router->route(new Path($view->viewName()));
         
         if($path === null)
         {
