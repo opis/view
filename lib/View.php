@@ -83,7 +83,7 @@ class View
         
         $engine = $this->resolver->resolve($path);
         
-        $arguments = $view->arguments();
+        $arguments = $view->viewArguments();
         
         if($this->insertKey)
         {
