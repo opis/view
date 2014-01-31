@@ -28,12 +28,11 @@ class Route extends BaseRoute
 {
     protected static $compilerInstance;
     
-    protected $priority;
     
     public function __construct($pattern, callable $action, $priority = 0)
     {
-        $this->priority = $priority;
         parent::__construct(new Pattern($pattern), $action, static::compiler());
+        $this->set('priority', $value);
     }
     
     protected static function compiler()
@@ -48,11 +47,19 @@ class Route extends BaseRoute
     
     public function getPriority()
     {
-        return $this->priority;
+        return $this->get('priority', 0);
     }
     
     public function where($name, $value)
     {
         return $this->wildcard($name, $value);
+    }
+    
+    public function serialize()
+    {
+        return serialize(array(
+            'properties' => $this->properties,
+            'wildcards' => $this->wildcards,
+        ));
     }
 }
