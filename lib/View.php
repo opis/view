@@ -20,7 +20,6 @@
 
 namespace Opis\View;
 
-use Closure;
 use Opis\Routing\Router;
 use Opis\Routing\Path;
 
@@ -53,7 +52,7 @@ class View
         $this->router = new Router($this->collection);
     }
     
-    public function handle($pattern, Closure $callback, $priority = 0)
+    public function handle($pattern, callable $callback, $priority = 0)
     {
         $route = new Route($pattern, $callback, $priority);
         $this->collection[] = $route;
