@@ -32,7 +32,7 @@ class Route extends BaseRoute
     public function __construct($pattern, callable $action, $priority = 0)
     {
         parent::__construct(new Pattern($pattern), $action, static::compiler());
-        $this->set('priority', $value);
+        $this->set('priority', $priority);
     }
     
     protected static function compiler()
