@@ -36,10 +36,10 @@ class View
     
     protected $router;
     
-    protected $dirty = true;
-    
-    public function __construct(EngineResolver $resolver = null, $insertKey = true, $viewkey = 'view')
+    public function __construct(RouteCollection $collection, EngineResolver $resolver = null, $insertKey = true, $viewkey = 'view')
     {
+        $this->collection = $collection;
+        
         if($resolver === null)
         {
             $resolver = new EngineResolver();
@@ -48,16 +48,7 @@ class View
         $this->resolver = $resolver;
         $this->insertKey = (bool) $insertKey;
         $this->viewKey = (string) $viewkey;
-        $this->collection = new RouteCollection();
         $this->router = new Router($this->collection);
-    }
-    
-    public function handle($pattern, callable $callback, $priority = 0)
-    {
-        $route = new Route($pattern, $callback, $priority);
-        $this->collection[] = $route;
-        $this->dirty = true;
-        return $route;
     }
     
     public function render($view)
@@ -67,11 +58,7 @@ class View
             return $view;
         }
         
-        if($this->dirty)
-        {
-            $this->collection->sort();
-            $this->dirty = false;
-        }
+        $this->collection->sort();
         
         $path = $this->router->route(new Path($view->viewName()));
         

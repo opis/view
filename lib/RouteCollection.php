@@ -25,17 +25,30 @@ use Opis\Routing\Collections\RouteCollection as BaseCollection;
 class RouteCollection extends BaseCollection
 {
     
+    protected $dirty = false;
+    
     public function sort()
     {
-        uasort($this->collection, function(&$a, &$b){
-            $v1 = $a->getPriority();
-            $v2 = $b->getPriority();
-            if($v1 === $v2)
-            {
-                return 0;
-            }
-            return $v1 < $v2 ? 1 : -1;
-        });
+        if($this->dirty)
+        {
+            uasort($this->collection, function(&$a, &$b){
+                $v1 = $a->getPriority();
+                $v2 = $b->getPriority();
+                if($v1 === $v2)
+                {
+                    return 0;
+                }
+                return $v1 < $v2 ? 1 : -1;
+            });
+            
+            $this->dirty = false;
+        }
+    }
+    
+    protected function offsetSet($offset, $value)
+    {
+        $this->dirty = true;
+        parent::offsetSet($offset, $value);
     }
     
     protected function checkType($value)
