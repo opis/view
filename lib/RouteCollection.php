@@ -45,7 +45,7 @@ class RouteCollection extends BaseCollection
         }
     }
     
-    protected function offsetSet($offset, $value)
+    public function offsetSet($offset, $value)
     {
         $this->dirty = true;
         parent::offsetSet($offset, $value);
