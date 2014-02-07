@@ -54,12 +54,4 @@ class Route extends BaseRoute
     {
         return $this->wildcard($name, $value);
     }
-    
-    public function serialize()
-    {
-        return serialize(array(
-            'properties' => $this->properties,
-            'wildcards' => $this->wildcards,
-        ));
-    }
 }
