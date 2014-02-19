@@ -20,6 +20,7 @@
 
 namespace Opis\View;
 
+use Opis\Closure\SerializableClosure;
 use Opis\Routing\Collections\RouteCollection as BaseCollection;
 
 class RouteCollection extends BaseCollection
@@ -57,5 +58,26 @@ class RouteCollection extends BaseCollection
         {
             throw new InvalidArgumentException('Expected \Opis\View\Route');
         }
+    }
+    
+    public function serialize()
+    {
+        SerializableClosure::enterContext();
+        
+        $object = serialize(array(
+            'dirty' => $this->dirty,
+            'collection' => $this->collection,
+        ));
+        
+        SerializableClosure::exitContext();
+        
+        return $object;
+    }
+    
+    public function unserialize($data)
+    {
+        $object = SerializableClosure::unserializeData($data);
+        $this->dirty = $object['dirty'];
+        $this->collection = $object['collection'];
     }
 }

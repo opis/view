@@ -20,48 +20,124 @@
 
 namespace Opis\View;
 
-class EngineResolver
+use Closure;
+use Serializable;
+use Opis\Closure\SerializableClosure;
+
+class EngineResolver implements Serializable
 {
     
-    protected $resolvers = array();
+    protected $engines = array();
     
     protected $defaultEngine;
     
-    public function __construct()
+    public function register(Closure $builder, $priority = 0)
     {
-        $this->defaultEngine = new PHPEngine();
-    }
-    
-    public function register($extension, Closure $resolver, $isregex = false)
-    {
-        if(!$isregex)
-        {
-            $extension = '`.+' . preg_quote('.' . $extension, '`') . '$`';
-        }
+        $entry = new EngineEntry($builder);
         
-        $this->resolvers[$extension] = array(
-            'resolver' => $resolver,
-            'instance' => null,
+        $this->engines[] = array(
+            'engine' => $entry,
+            'priority' => $priority,
         );
         
+        uasort($this->engines, function(&$a, &$b){
+            
+            if($a['priority'] === $b['priority'])
+            {
+                return 0;
+            }
+            
+            return $a['priority'] < $b['priority'] ? 1 : -1;
+        });
+        
+        return $entry;
     }
     
     public function resolve($path)
     {
-        foreach($this->resolvers as $key => &$engine)
+        foreach($this->engines as &$entry)
         {
-            if(preg_match($key, $path))
+            $engine = $entry['engine'];
+            
+            if($engine->canHandle($path))
             {
-                if($engine['instance'] === null)
-                {
-                    $engine['instance'] = $engine['resolver']($path);
-                }
-                
-                return $engine['instance'];
+                return $engine->instance();
             }
         }
-        
+        return $this->getDefaultEngine();
+    }
+    
+    protected function getDefaultEngine()
+    {
+        if($this->defaultEngine === null)
+        {
+            $this->defaultEngine = new PHPEngine();
+        }
         return $this->defaultEngine;
     }
     
+    public function serialize()
+    {
+        return serialize($this->engines);
+    }
+    
+    public function unserialize($data)
+    {
+        $this->engines = unserialize($data);
+    }
+    
+}
+
+class EngineEntry implements Serializable
+{
+    protected $builder;
+    
+    protected $handler;
+    
+    protected $instance;
+    
+    public function __construct(Closure $builder)
+    {
+        $this->builder = $builder;
+    }
+    
+    public function handle(Closure $handler)
+    {
+        $this->handler = $handler;
+    }
+    
+    public function canHandle($path)
+    {
+        $handler = $this->handler;
+        return $handler($path);
+    }
+    
+    public function instance()
+    {
+        if($this->instance === null)
+        {
+            $builder = $this->builder;
+            $this->instance = $builder();   
+        }
+        
+        return $this->instance;
+    }
+    
+    public function serialize()
+    {
+        SerializableClosure::enterContext();
+        $object = serialize(array(
+            'handler' => SerializableClosure::from($this->handler),
+            'builder' => SerializableClosure::from($this->builder),
+        ));
+        SerializableClosure::exitContext();
+        return $object;
+    }
+    
+    public function unserialize($data)
+    {
+        $object = SerializableClosure::unserializeData($data);
+        $this->handler = $object['handler'];
+        $this->builder = $object['builder'];
+    }
 }

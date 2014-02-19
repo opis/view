@@ -20,39 +20,27 @@
 
 namespace Opis\View;
 
-use Closure;
-use Opis\Routing\Route as BaseRoute;
-use Opis\Routing\Pattern;
-use Opis\Routing\Compiler;
-
-class Route extends BaseRoute
+class BaseView implements ViewableInterface
 {
-    protected static $compilerInstance;
     
+    protected $name;
     
-    public function __construct($pattern, Closure $action, $priority = 0)
+    protected $arguments;
+    
+    public function __construct($name, array $arguments = array())
     {
-        parent::__construct(new Pattern($pattern), $action, static::compiler());
-        $this->set('priority', $priority);
+        $this->name = $name;
+        $this->arguments = $arguments;
     }
     
-    protected static function compiler()
+    public function viewName()
     {
-        if(static::$compilerInstance === null)
-        {
-            static::$compilerInstance = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
-        }
-        
-        return static::$compilerInstance;
+        return $this->name;
     }
     
-    public function getPriority()
+    public function viewArguments()
     {
-        return $this->get('priority', 0);
+        return $this->arguments;
     }
     
-    public function where($name, $value)
-    {
-        return $this->wildcard($name, $value);
-    }
 }
