@@ -1,5 +1,9 @@
 Opis View
 =========
+[![Latest Stable Version](https://poser.pugx.org/opis/view/version.png)](https://packagist.org/packages/opis/view)
+[![Latest Unstable Version](https://poser.pugx.org/opis/view/v/unstable.png)](//packagist.org/packages/opis/view)
+[![License](https://poser.pugx.org/opis/view/license.png)](https://packagist.org/packages/opis/view)
+
 A **must have** view component that can be integrated with multiple rendering engines simultaneously.
 
 ###Installation
