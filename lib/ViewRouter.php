@@ -20,10 +20,13 @@
 
 namespace Opis\View;
 
+use Closure;
+use Serializable;
 use Opis\Routing\Router;
 use Opis\Routing\Path;
+use Opis\Closure\SerializableClosure;
 
-class View
+class ViewRouter implements Serializable
 {
     
     protected $resolver;
@@ -36,19 +39,40 @@ class View
     
     protected $router;
     
-    public function __construct(RouteCollection $collection, EngineResolver $resolver = null, $insertKey = true, $viewkey = 'view')
+    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, $insertKey = true, $viewkey = 'view')
     {
-        $this->collection = $collection;
+        if($collection === null)
+        {
+            $collection = new RouteCollection();
+        }
         
         if($resolver === null)
         {
             $resolver = new EngineResolver();
         }
         
+        $this->collection = $collection;
         $this->resolver = $resolver;
         $this->insertKey = (bool) $insertKey;
         $this->viewKey = (string) $viewkey;
         $this->router = new Router($this->collection);
+    }
+    
+    public function routeCollection()
+    {
+        return $this->collection;
+    }
+    
+    public function engineResolver()
+    {
+        return $this->resolver;
+    }
+    
+    public function handle($pattern, Closure $resolver, $priority = 0)
+    {
+        $route = new Route($pattern, $resolver, $priority);
+        $this->collection[] = $route;
+        return $route;
     }
     
     public function render($view)
@@ -77,6 +101,35 @@ class View
         }
         
         return $engine->build($path, $arguments);
+    }
+    
+    public function renderView($name, array $arguments = array())
+    {
+        return $this->render(new BaseView($name, $arguments));
+    }
+    
+    public function serialize()
+    {
+        SerializableClosure::enterContext();
+        $object = serialize(array(
+            'resolver' => $this->resolver,
+            'collection' => $this->collection,
+            'insertKey' => $this->insertKey,
+            'viewKey' => $this->viewKey
+        ));
+        SerializableClosure::exitContext();
+        
+        return $object;
+    }
+    
+    public function unserialize($data)
+    {
+        $object = SerializableClosure::unserializeData($data);
+        $this->resolver = $object['resolver'];
+        $this->collection = $object['collection'];
+        $this->insertKey = $object['insertKey'];
+        $this->viewKey = $object['viewKey'];
+        $this->router = new Router($this->collection);
     }
     
 }

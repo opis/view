@@ -1,2 +1,43 @@
-view
-====
+Opis View
+=========
+A **must have** view component that can be integrated with multiple rendering engines simultaneously.
+
+###Installation
+
+This library is available on [Packagist](https://packagist.org/packages/opis/view) and can be installed using [Composer](http://getcomposer.org)
+
+```json
+{
+    "require": {
+        "opis/view": "2.0.*"
+    }
+}
+```
+
+###Documentation
+
+###Examples
+
+```php
+use Opis\View\ViewRouter;
+use Opis\View\BaseView;
+
+$router = new ViewRouter();
+
+$router->handle('view.{name}', function($name){
+    return  '/some/path/' . $name . '.php';
+})
+->where('name', 'welcome|account');
+
+print $router->renderView('view.welcome');
+//Or..
+print $router->render(new BaseView('view.welcome'));
+
+//Serialize and unserialize
+
+$router = unserialize(serialize($router));
+
+print $router->renderView('view.account', array('user' => 'Opis'));
+//Or..
+print $router->render(new BaseView('view.account', array('user' => 'Opis')));
+```
