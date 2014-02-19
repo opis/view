@@ -24,7 +24,7 @@ This library is available on [Packagist](https://packagist.org/packages/opis/vie
 
 ```php
 use Opis\View\ViewRouter;
-use Opis\View\BaseView;
+use Opis\View\View;
 
 $router = new ViewRouter();
 
@@ -35,7 +35,7 @@ $router->handle('view.{name}', function($name){
 
 print $router->renderView('view.welcome');
 //Or..
-print $router->render(new BaseView('view.welcome'));
+print $router->render(new View('view.welcome'));
 
 //Serialize and unserialize
 
@@ -43,5 +43,5 @@ $router = unserialize(serialize($router));
 
 print $router->renderView('view.account', array('user' => 'Opis'));
 //Or..
-print $router->render(new BaseView('view.account', array('user' => 'Opis')));
+print $router->render(new View('view.account', array('user' => 'Opis')));
 ```

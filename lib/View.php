@@ -20,7 +20,7 @@
 
 namespace Opis\View;
 
-class BaseView implements ViewableInterface
+class View implements ViewableInterface
 {
     
     protected $name;
