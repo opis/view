@@ -1,7 +1,7 @@
 {
     "name": "opis/view",
-    "description": "Opis View Component",
-    "keywords": ["opis", "view"],
+    "description": "Flexible view component that can be integrated with multiple rendering engines simultaneously",
+    "keywords": ["view", "template", "renderer", "serializable", "engine"],
     "homepage": "http://opis.io",
     "license": "Apache-2.0",
     "authors": [
@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.3.0",
         "opis/routing": "2.0.*"
     },
     "autoload": {
