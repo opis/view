@@ -36,12 +36,14 @@ class Route extends BaseRoute
     
     public static function getCompiler()
     {
-        if(static::$compiler === null)
+        static $compiler = null;
+        
+        if($compiler === null)
         {
-            static::$compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
+            $compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
         }
         
-        return static::$compiler;
+        return $compiler;
     }
     
     public function getPriority()
