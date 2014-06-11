@@ -27,23 +27,21 @@ use Opis\Routing\Compiler;
 
 class Route extends BaseRoute
 {
-    protected static $compilerInstance;
-    
-    
+
     public function __construct($pattern, Closure $action, $priority = 0)
     {
-        parent::__construct(new Pattern($pattern), $action, static::compiler());
+        parent::__construct(new Pattern($pattern), $action);
         $this->set('priority', $priority);
     }
     
-    protected static function compiler()
+    public static function getCompiler()
     {
-        if(static::$compilerInstance === null)
+        if(static::$compiler === null)
         {
-            static::$compilerInstance = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
+            static::$compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
         }
         
-        return static::$compilerInstance;
+        return static::$compiler;
     }
     
     public function getPriority()
