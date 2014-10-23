@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### Opis View 2.4.0, 2014.10.23
+
+* Updated `opis/routing` library dependency to version `2.4.*`
+
 ### Opis View 2.3.1, 2014.06.11
 
 *  Fixed a bug in `Opis\View\Route`.
