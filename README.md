@@ -13,7 +13,7 @@ This library is available on [Packagist](https://packagist.org/packages/opis/vie
 ```json
 {
     "require": {
-        "opis/view": "2.4.*"
+        "opis/view": "2.5.*"
     }
 }
 ```
