@@ -24,7 +24,9 @@ use Closure;
 use Serializable;
 use Opis\Routing\Router;
 use Opis\Routing\Path;
+use Opis\Routing\PathFilter;
 use Opis\Closure\SerializableClosure;
+use Opis\Routing\Collections\FilterCollection;
 
 class ViewRouter implements Serializable
 {
@@ -51,11 +53,15 @@ class ViewRouter implements Serializable
             $resolver = new EngineResolver();
         }
         
+        $filters = new FilterCollection();
+        $filters[] = new PathFilter();
+        $filters[] = new UserFilter();
+        
         $this->collection = $collection;
         $this->resolver = $resolver;
         $this->insertKey = (bool) $insertKey;
         $this->viewKey = (string) $viewkey;
-        $this->router = new Router($this->collection);
+        $this->router = new Router($this->collection, null, $filters);
     }
     
     public function routeCollection()
@@ -125,11 +131,17 @@ class ViewRouter implements Serializable
     public function unserialize($data)
     {
         $object = SerializableClosure::unserializeData($data);
+        
         $this->resolver = $object['resolver'];
         $this->collection = $object['collection'];
         $this->insertKey = $object['insertKey'];
         $this->viewKey = $object['viewKey'];
-        $this->router = new Router($this->collection);
+        
+        $filters = new FilterCollection();
+        $filters[] = new PathFilter();
+        $filters[] = new UserFilter();
+        
+        $this->router = new Router($this->collection, null, $filters);
     }
     
 }

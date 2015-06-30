@@ -21,16 +21,17 @@
 namespace Opis\View;
 
 use Closure;
-use Opis\Routing\Route as BaseRoute;
 use Opis\Routing\Pattern;
 use Opis\Routing\Compiler;
+use Opis\Routing\Route as BaseRoute;
 
 class Route extends BaseRoute
 {
 
-    public function __construct($pattern, Closure $action, $priority = 0)
+    public function __construct($pattern, $action, $priority = 0)
     {
         parent::__construct(new Pattern($pattern), $action);
+        
         $this->set('priority', $priority);
     }
     
