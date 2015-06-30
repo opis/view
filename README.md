@@ -4,44 +4,41 @@ Opis View
 [![Latest Unstable Version](https://poser.pugx.org/opis/view/v/unstable.png)](//packagist.org/packages/opis/view)
 [![License](https://poser.pugx.org/opis/view/license.png)](https://packagist.org/packages/opis/view)
 
-A **must have** view component that can be integrated with multiple rendering engines simultaneously.
+View component
+--------------
+**Opis View** is view component based on the **Opis Routing** library that can be integrated with multiple rendering engines simultaneously.
 
-###Installation
+### License
 
-This library is available on [Packagist](https://packagist.org/packages/opis/view) and can be installed using [Composer](http://getcomposer.org)
+**Opis View** is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). 
+
+### Requirements
+
+* PHP 5.3.* or higher
+* [Opis Routing](http://www.opis.io/routing) 3.0.*
+
+### Installation
+
+This library is available on [Packagist](https://packagist.org/packages/opis/view) and can be installed using [Composer](http://getcomposer.org).
 
 ```json
 {
     "require": {
-        "opis/view": "2.5.*"
+        "opis/view": "3.0.*"
     }
 }
 ```
 
-###Documentation
-
-###Examples
+If you are unable to use [Composer](http://getcomposer.org) you can download the
+[tar.gz](https://github.com/opis/view/archive/3.0.0.tar.gz) or the [zip](https://github.com/opis/view/archive/3.0.0.zip)
+archive file, extract the content of the archive and include de `autoload.php` file into your project. 
 
 ```php
-use Opis\View\ViewRouter;
-use Opis\View\View;
 
-$router = new ViewRouter();
+require_once 'path/to/view-3.0.0/autoload.php';
 
-$router->handle('view.{name}', function($name){
-    return  '/some/path/' . $name . '.php';
-})
-->where('name', 'welcome|account');
-
-print $router->renderView('view.welcome');
-//Or..
-print $router->render(new View('view.welcome'));
-
-//Serialize and unserialize
-
-$router = unserialize(serialize($router));
-
-print $router->renderView('view.account', array('user' => 'Opis'));
-//Or..
-print $router->render(new View('view.account', array('user' => 'Opis')));
 ```
+
+### Documentation
+
+Examples and documentation can be found at http://opis.io/view .
