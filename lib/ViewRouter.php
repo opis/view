@@ -68,7 +68,7 @@ class ViewRouter implements Serializable
         return $this->resolver;
     }
     
-    public function handle($pattern, Closure $resolver, $priority = 0)
+    public function handle($pattern, $resolver, $priority = 0)
     {
         $route = new Route($pattern, $resolver, $priority);
         $this->collection[] = $route;
@@ -105,7 +105,7 @@ class ViewRouter implements Serializable
     
     public function renderView($name, array $arguments = array())
     {
-        return $this->render(new BaseView($name, $arguments));
+        return $this->render(new View($name, $arguments));
     }
     
     public function serialize()
