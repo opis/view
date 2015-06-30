@@ -137,7 +137,7 @@ class EngineEntry implements Serializable
     public function unserialize($data)
     {
         $object = SerializableClosure::unserializeData($data);
-        $this->handler = $object['handler'];
-        $this->builder = $object['builder'];
+        $this->handler = $object['handler']->getClosure();
+        $this->builder = $object['builder']->getClosure();
     }
 }
