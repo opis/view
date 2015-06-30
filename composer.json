@@ -1,6 +1,6 @@
 {
     "name": "opis/view",
-    "description": "A view component that can be integrated with multiple rendering engines simultaneously",
+    "description": "A rendering engine that can be integrated with multiple template engines simultaneously",
     "keywords": ["view", "template", "renderer", "serializable", "engine"],
     "homepage": "http://opis.io/view",
     "license": "Apache-2.0",

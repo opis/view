@@ -4,9 +4,9 @@ Opis View
 [![Latest Unstable Version](https://poser.pugx.org/opis/view/v/unstable.png)](//packagist.org/packages/opis/view)
 [![License](https://poser.pugx.org/opis/view/license.png)](https://packagist.org/packages/opis/view)
 
-View component
+Rendering engine
 --------------
-**Opis View** is a view component based on the **Opis Routing** library that can be integrated with multiple rendering engines simultaneously.
+**Opis View** is a rendering engine based on the **Opis Routing** library that can be integrated with multiple template engines simultaneously.
 
 ### License
 
