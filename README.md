@@ -6,7 +6,7 @@ Opis View
 
 View component
 --------------
-**Opis View** is view component based on the **Opis Routing** library that can be integrated with multiple rendering engines simultaneously.
+**Opis View** is a view component based on the **Opis Routing** library that can be integrated with multiple rendering engines simultaneously.
 
 ### License
 
