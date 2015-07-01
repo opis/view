@@ -20,7 +20,6 @@
 
 namespace Opis\View;
 
-use Closure;
 use Opis\Routing\Pattern;
 use Opis\Routing\Compiler;
 use Opis\Routing\Route as BaseRoute;

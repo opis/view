@@ -21,14 +21,13 @@
 namespace Opis\View;
 
 use Opis\Routing\Path;
-use Opis\Routing\Route;
 use Opis\Routing\Callback;
 use Opis\Routing\FilterInterface;
+use Opis\Routing\Route as BaseRoute;
 
 class UserFilter implements FilterInterface
 {
-   
-    public function pass(Path $path, Route $route)
+    public function pass(Path $path, BaseRoute $route)
     {
         $filter = $route->get('filter');
         

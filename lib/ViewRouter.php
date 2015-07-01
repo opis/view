@@ -22,8 +22,8 @@ namespace Opis\View;
 
 use Closure;
 use Serializable;
-use Opis\Routing\Router;
 use Opis\Routing\Path;
+use Opis\Routing\Router;
 use Opis\Routing\PathFilter;
 use Opis\Closure\SerializableClosure;
 use Opis\Routing\Collections\FilterCollection;
