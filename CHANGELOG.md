@@ -2,7 +2,7 @@ CHANGELOG
 -----------
 ### Opis View 3.0.x-dev
 
-* Updated `opis/routing` library dependency to version `3.0.*`
+* Updated `opis/routing` library dependency to version `3.0.*-dev`
 * Fixed a small bug in `EngineResover::unserialize`
 * Fixed a bug in `ViewRouter`'s `renderView` method
 * Added `autoload.php` file
