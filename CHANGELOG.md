@@ -1,6 +1,6 @@
 CHANGELOG
 -----------
-### Opis View 3.0.0, 2015.06.30
+### Opis View 3.0.x-dev
 
 * Updated `opis/routing` library dependency to version `3.0.*`
 * Fixed a small bug in `EngineResover::unserialize`
