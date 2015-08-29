@@ -1,12 +1,12 @@
 CHANGELOG
 -----------
-### Opis View, 3.1.0, 2015.08.30
+### v3.1.0, 2015.08.30
 
 * Removed `branch-alias` property from `composer.json` file
 * Added `resolveViewName` method in `ViewRouter` class
 * View names are now cached.
 
-### Opis View 3.0.0, 2015.07.31
+### v3.0.0, 2015.07.31
 
 * Updated `opis/routing` library dependency to version `3.0.*`
 * Fixed a small bug in `EngineResover::unserialize`
@@ -14,24 +14,24 @@ CHANGELOG
 * Added `autoload.php` file
 * Added support for custom filtering
 
-### Opis View 2.5.0, 2015.03.20
+### v2.5.0, 2015.03.20
 
 * Updated `opis/routing` library dependency to version `2.5.*`
 
-### Opis View 2.4.0, 2014.10.23
+### v2.4.0, 2014.10.23
 
 * Updated `opis/routing` library dependency to version `2.4.*`
 
-### Opis View 2.3.1, 2014.06.11
+### v2.3.1, 2014.06.11
 
 *  Fixed a bug in `Opis\View\Route`.
 
-### Opis View 2.3.0, 2014.06.11
+### v2.3.0, 2014.06.11
 
 * Updated `opis/routing` library dependency to version `2.3.0`
 * Updated `Opis\View\Route` to reflect changes that were made in `opis/routing`
 
-### Opis View 2.2.0, 2014.06.04
+### v2.2.0, 2014.06.04
 
 * Started changelog
 * Updated `opis/routing` dependency to version `2.2.*`
