@@ -1,8 +1,10 @@
 CHANGELOG
 -----------
-### Opis View
+### Opis View, 3.1.0, 2015.08.30
 
 * Removed `branch-alias` property from `composer.json` file
+* Added `resolveViewName` method in `ViewRouter` class
+* View names are now cached.
 
 ### Opis View 3.0.0, 2015.07.31
 
