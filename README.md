@@ -24,18 +24,18 @@ This library is available on [Packagist](https://packagist.org/packages/opis/vie
 ```json
 {
     "require": {
-        "opis/view": "3.0.*"
+        "opis/view": "3.1.*"
     }
 }
 ```
 
 If you are unable to use [Composer](http://getcomposer.org) you can download the
-[tar.gz](https://github.com/opis/view/archive/3.0.0.tar.gz) or the [zip](https://github.com/opis/view/archive/3.0.0.zip)
+[tar.gz](https://github.com/opis/view/archive/3.1.0.tar.gz) or the [zip](https://github.com/opis/view/archive/3.1.0.zip)
 archive file, extract the content of the archive and include de `autoload.php` file into your project. 
 
 ```php
 
-require_once 'path/to/view-3.0.0/autoload.php';
+require_once 'path/to/view-3.1.0/autoload.php';
 
 ```
 
