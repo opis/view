@@ -31,15 +31,17 @@ use Opis\Routing\Collections\FilterCollection;
 class ViewRouter implements Serializable
 {
     
-    protected $resolver;
+    protected $cache;
     
-    protected $collection;
-    
-    protected $insertKey;
+    protected $router;
     
     protected $viewKey;
     
-    protected $router;
+    protected $resolver;
+    
+    protected $insertKey;
+    
+    protected $collection;
     
     public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, $insertKey = true, $viewkey = 'view')
     {
@@ -57,6 +59,7 @@ class ViewRouter implements Serializable
         $filters[] = new PathFilter();
         $filters[] = new UserFilter();
         
+        $this->cache = array();
         $this->collection = $collection;
         $this->resolver = $resolver;
         $this->insertKey = (bool) $insertKey;
@@ -78,6 +81,7 @@ class ViewRouter implements Serializable
     {
         $route = new Route($pattern, $resolver, $priority);
         $this->collection[] = $route;
+        $this->cache = array(); //clear cache
         return $route;
     }
     
@@ -88,9 +92,7 @@ class ViewRouter implements Serializable
             return $view;
         }
         
-        $this->collection->sort();
-        
-        $path = $this->router->route(new Path($view->viewName()));
+        $path = $this->resolveViewName($view->viewName());
         
         if($path === null)
         {
@@ -112,6 +114,17 @@ class ViewRouter implements Serializable
     public function renderView($name, array $arguments = array())
     {
         return $this->render(new View($name, $arguments));
+    }
+    
+    public function resolveViewName($name)
+    {
+        if(!isset($this->cache[$name]))
+        {
+            $this->collection->sort();
+            $this->cache[$name] = $this->router->route(new Path($name));
+        }
+        
+        return $this->cache[$name];
     }
     
     public function serialize()
