@@ -22,25 +22,41 @@ namespace Opis\View;
 
 class View implements ViewableInterface
 {
-    
+    /** @var    string */
     protected $name;
-    
+
+    /** @var    array */
     protected $arguments;
-    
+
+    /**
+     * Constructor
+     * 
+     * @param   string  $name
+     * @param   array   $arguments  (optional)
+     */
     public function __construct($name, array $arguments = array())
     {
         $this->name = $name;
         $this->arguments = $arguments;
     }
-    
+
+    /**
+     * Return view's name
+     * 
+     * @return  string
+     */
     public function viewName()
     {
         return $this->name;
     }
-    
+
+    /**
+     * Return view's arguments
+     * 
+     * @return  array
+     */
     public function viewArguments()
     {
         return $this->arguments;
     }
-    
 }

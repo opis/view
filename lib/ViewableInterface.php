@@ -22,7 +22,18 @@ namespace Opis\View;
 
 interface ViewableInterface
 {
+
+    /**
+     * Returns view's name
+     * 
+     * @return  string
+     */
     public function viewName();
-    
+
+    /**
+     * Returns view's arguments
+     * 
+     * @return  array
+     */
     public function viewArguments();
 }
