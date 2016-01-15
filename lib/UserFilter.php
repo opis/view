@@ -21,48 +21,56 @@
 namespace Opis\View;
 
 use Opis\Routing\Path;
+use Opis\Routing\Router;
 use Opis\Routing\Callback;
 use Opis\Routing\FilterInterface;
 use Opis\Routing\Route as BaseRoute;
 
 class UserFilter implements FilterInterface
 {
-    public function pass(Path $path, BaseRoute $route)
+
+    /**
+     * Check if a route pass this filter
+     * 
+     * @param   \Opis\Routing\Router    $router
+     * @param   \Opis\Routing\Path      $path
+     * @param   \Opis\Routing\Route     $route
+     * 
+     * @return  boolean
+     */
+    public function pass(Router $router, Path $path, BaseRoute $route)
     {
         $filter = $route->get('filter');
-        
-        if(!is_callable($filter))
-        {
+
+        if (!is_callable($filter)) {
             return true;
         }
-        
+
         $callback = new Callback($filter);
         
-        $values = $route->compile()->extract($path);
-        
+        $values = $route->compile()->bind($path);
+        $specials = $router->getSpecialValues();
+
         $arguments = array();
-        
+
         $parameters = $callback->getParameters();
-        
-        foreach($parameters as $param)
-        {
+
+        foreach ($parameters as $param) {
             $name = $param->getName();
-            
-            if(isset($values[$name]))
-            {
+
+            if (isset($values[$name])) {
                 $arguments[] = $values[$name];
             }
-            elseif($param->isOptional())
-            {
-                $arguments[] = $param->getDefaultValue();
+            elseif(isset($specials[$name])){
+                $arguments[] = $specials[$name];
             }
-            else
-            {
+            elseif ($param->isOptional()) {
+                $arguments[] = $param->getDefaultValue();
+            } else {
                 $arguments[] = null;
             }
         }
-        
+
         return $callback->invoke($arguments);
-        
     }
 }
