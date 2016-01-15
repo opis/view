@@ -1,6 +1,6 @@
 CHANGELOG
 -----------
-### v4.0.0
+### v4.0.0, 2016.01.15
 
 * Fixed CS
 * Added tests
