@@ -33,12 +33,23 @@ class RouteCollection extends BaseCollection
      */
     public function sort()
     {
+        static $eq;
+
         if ($this->dirty) {
-            uasort($this->collection, function(&$a, &$b) {
+
+            if ($eq === null) {
+                $arr = array(array(0, -1), array(0, 1));
+                uasort($arr, function($a, $b){
+                    return 0;
+                });
+                $eq = $arr[0][1];
+            }
+            
+            uasort($this->collection, function(&$a, &$b) use($eq) {
                 $v1 = $a->getPriority();
                 $v2 = $b->getPriority();
                 if ($v1 === $v2) {
-                    return -1;
+                    return $eq;
                 }
                 return $v1 < $v2 ? 1 : -1;
             });

@@ -42,6 +42,16 @@ class EngineResolver implements Serializable
      */
     public function register(Closure $builder, $priority = 0)
     {
+        static $eq;
+
+        if ($eq === null) {
+            $arr = array(array(0, -1), array(0, 1));
+            uasort($arr, function($a, $b) {
+                return 0;
+            });
+            $eq = $arr[0][1];
+        }
+
         $entry = new EngineEntry($builder);
 
         $this->engines[] = array(
@@ -49,12 +59,12 @@ class EngineResolver implements Serializable
             'priority' => $priority,
         );
 
-        uasort($this->engines, function(&$a, &$b) {
-
+        uasort($this->engines, function($a, $b) use($eq){
+            
             if ($a['priority'] === $b['priority']) {
-                return 0;
+                return $eq;
             }
-
+            
             return $a['priority'] < $b['priority'] ? 1 : -1;
         });
 
