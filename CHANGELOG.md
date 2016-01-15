@@ -1,5 +1,12 @@
 CHANGELOG
 -----------
+### v4.0.0
+
+* Fixed CS
+* Added tests
+* Updated `opis/routing` library dependency to version `4.0.*`
+* Updated `UserFilter` class in order to reflect changes made in `opis/routing` library
+
 ### v3.1.0, 2015.08.30
 
 * Removed `branch-alias` property from `composer.json` file
