@@ -42,7 +42,8 @@ class RouteCollection extends BaseCollection
                 uasort($arr, function($a, $b){
                     return 0;
                 });
-                $eq = $arr[0][1];
+                $arr = reset($arr);
+                $eq = $arr[1];
             }
             
             uasort($this->collection, function(&$a, &$b) use($eq) {
