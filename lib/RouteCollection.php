@@ -38,7 +38,7 @@ class RouteCollection extends BaseCollection
                 $v1 = $a->getPriority();
                 $v2 = $b->getPriority();
                 if ($v1 === $v2) {
-                    return 0;
+                    return -1;
                 }
                 return $v1 < $v2 ? 1 : -1;
             });
