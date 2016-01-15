@@ -38,7 +38,7 @@ class RouteCollection extends BaseCollection
         if ($this->dirty) {
 
             if ($eq === null) {
-                $arr = array(array(0, -1), array(0, 1));
+                $arr = array(array(0, 1), array(0, -1));
                 uasort($arr, function($a, $b){
                     return 0;
                 });

@@ -45,7 +45,7 @@ class EngineResolver implements Serializable
         static $eq;
 
         if ($eq === null) {
-            $arr = array(array(0, -1), array(0, 1));
+            $arr = array(array(0, 1), array(0, -1));
             uasort($arr, function($a, $b) {
                 return 0;
             });
