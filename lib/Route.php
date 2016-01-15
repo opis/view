@@ -26,31 +26,58 @@ use Opis\Routing\Route as BaseRoute;
 
 class Route extends BaseRoute
 {
+    /** @var    int */
+    protected $priority;
 
+    /**
+     * Constructor
+     * 
+     * @param   string      $pattern
+     * @param   callable    $action
+     * @param   int         $priority   (optional)
+     */
     public function __construct($pattern, $action, $priority = 0)
     {
+        $this->priority = $priority;
         parent::__construct(new Pattern($pattern), $action);
-        
-        $this->set('priority', $priority);
     }
-    
-    public static function getCompiler()
+
+    /**
+     * Get the compiler
+     * 
+     * @staticvar   \Opis\Routing\Compiler  $compiler
+     * 
+     * @return      \Opis\Routing\Compiler
+     */
+    public function getCompiler()
     {
         static $compiler = null;
-        
-        if($compiler === null)
-        {
-            $compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT|Compiler::CAPTURE_TRAIL));
+
+        if ($compiler === null) {
+            $compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT | Compiler::CAPTURE_TRAIL));
         }
         
         return $compiler;
     }
-    
+
+    /**
+     * Get route's priority
+     * 
+     * @return  int
+     */
     public function getPriority()
     {
-        return $this->get('priority', 0);
+        return $this->priority;
     }
-    
+
+    /**
+     * A more suggestive alias of the `wildcard` method
+     * 
+     * @param   string  $name
+     * @param   string  $value
+     * 
+     * @return  string
+     */
     public function where($name, $value)
     {
         return $this->wildcard($name, $value);
