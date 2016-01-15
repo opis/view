@@ -24,34 +24,43 @@ use Exception;
 
 class PHPEngine implements EngineInterface
 {
-    
+    /** @var    string */
     protected $path;
+
+    /** @var    array */
     protected $data;
-    
+
+    /**
+     * Build
+     * 
+     * @throws Exception
+     * 
+     * @param   string  $path
+     * @param   array   $data
+     * 
+     * @return  mixed
+     */
     public function build($path, array $data = array())
     {
         $this->path = $path;
         $this->data = $data;
-        
+
         ob_start();
-        
+
         extract($this->data);
-        
-        try
-        {
+
+        try {
             include $this->path;
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             ob_get_clean();
             throw $e;
         }
-        
+
         $result = ob_get_clean();
-        
+
         unset($this->path);
         unset($this->data);
-        
+
         return $result;
     }
 }
