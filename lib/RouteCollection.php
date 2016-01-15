@@ -25,55 +25,78 @@ use Opis\Routing\Collections\RouteCollection as BaseCollection;
 
 class RouteCollection extends BaseCollection
 {
-    
+    /** @var    boolean */
     protected $dirty = false;
-    
+
+    /**
+     * Sort all routes
+     */
     public function sort()
     {
-        if($this->dirty)
-        {
-            uasort($this->collection, function(&$a, &$b){
+        if ($this->dirty) {
+            uasort($this->collection, function(&$a, &$b) {
                 $v1 = $a->getPriority();
                 $v2 = $b->getPriority();
-                if($v1 === $v2)
-                {
+                if ($v1 === $v2) {
                     return 0;
                 }
                 return $v1 < $v2 ? 1 : -1;
             });
-            
+
             $this->dirty = false;
         }
     }
-    
+
+    /**
+     * Set offest
+     * 
+     * @param   mixed   $offset
+     * @param   mixed   $value
+     */
     public function offsetSet($offset, $value)
     {
         $this->dirty = true;
         parent::offsetSet($offset, $value);
     }
-    
+
+    /**
+     * Check value's type
+     * 
+     * @param \Opis\View\Route $value
+     * 
+     * @throws InvalidArgumentException
+     */
     protected function checkType($value)
     {
-        if(!($value instanceof Route))
-        {
+        if (!($value instanceof Route)) {
             throw new InvalidArgumentException('Expected \Opis\View\Route');
         }
     }
-    
+
+    /**
+     * Serialize
+     * 
+     * @return  string
+     */
     public function serialize()
     {
         SerializableClosure::enterContext();
-        
+
         $object = serialize(array(
             'dirty' => $this->dirty,
             'collection' => $this->collection,
         ));
-        
+
         SerializableClosure::exitContext();
-        
+
         return $object;
     }
-    
+
+    /**
+     * Unserialize
+     * 
+     * @param   string  $data
+     */
     public function unserialize($data)
     {
         $object = SerializableClosure::unserializeData($data);
