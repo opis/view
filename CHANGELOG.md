@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### v4.0.1, 2016.01.16
+
+Fixed a bug caused by the `uasort` function, which behaves different in PHP 7 than it does in PHP 5
+
 ### v4.0.0, 2016.01.15
 
 * Fixed CS
