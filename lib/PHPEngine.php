@@ -38,7 +38,7 @@ class PHPEngine implements EngineInterface
      * @param   string  $path
      * @param   array   $data
      * 
-     * @return  mixed
+     * @return  string
      */
     public function build($path, array $data = array())
     {
