@@ -1,8 +1,10 @@
 CHANGELOG
 -----------
-### v4.0.1, 2016.01.16
+### v4.1.0, 2016.01.16
 
-Fixed a bug caused by the `uasort` function, which behaves different in PHP 7 than it does in PHP 5
+* Fixed a bug caused by the `uasort` function which behaves different in PHP 7 than it does in PHP 5
+* Updated `opis/routing` library dependency to version `^4.1.0`
+* Modified `UserFilter` class to reflect changes
 
 ### v4.0.0, 2016.01.15
 
