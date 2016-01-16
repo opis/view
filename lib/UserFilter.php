@@ -47,29 +47,9 @@ class UserFilter implements FilterInterface
         }
 
         $callback = new Callback($filter);
-        
         $values = $route->compile()->bind($path);
         $specials = $router->getSpecialValues();
-
-        $arguments = array();
-
-        $parameters = $callback->getParameters();
-
-        foreach ($parameters as $param) {
-            $name = $param->getName();
-
-            if (isset($values[$name])) {
-                $arguments[] = $values[$name];
-            }
-            elseif(isset($specials[$name])){
-                $arguments[] = $specials[$name];
-            }
-            elseif ($param->isOptional()) {
-                $arguments[] = $param->getDefaultValue();
-            } else {
-                $arguments[] = null;
-            }
-        }
+        $arguments = $callback->getArguments($values, $specials);
 
         return $callback->invoke($arguments);
     }
