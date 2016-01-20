@@ -50,6 +50,9 @@ class ViewRouter implements Serializable
 
     /** @var    \Opis\Routing\Collections\FilterCollection */
     protected $filters;
+    
+    /** @var    mixed|null  */
+    protected $param;
 
     /**
      * Constructor
@@ -163,7 +166,7 @@ class ViewRouter implements Serializable
             return null;
         }
 
-        $engine = $this->resolver->resolve($path);
+        $engine = $this->resolver->resolve($path, $this->param);
 
         $arguments = $view->viewArguments();
 

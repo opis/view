@@ -75,17 +75,18 @@ class EngineResolver implements Serializable
     /**
      * Resolve a path to a render engine
      * 
-     * @param   string  $path
+     * @param   string      $path
+     * @param   mixed|null  $param  (optional)
      * 
      * @return  \Opis\View\EngineInterface
      */
-    public function resolve($path)
+    public function resolve($path, $param = null)
     {
         foreach ($this->engines as &$entry) {
             $engine = $entry['engine'];
 
             if ($engine->canHandle($path)) {
-                return $engine->instance();
+                return $engine->instance($param);
             }
         }
         return $this->getDefaultEngine();
@@ -159,7 +160,7 @@ class EngineEntry implements Serializable
     /**
      * Check if the path can be handled
      * 
-     * @param   string  $path
+     * @param   string      $path
      * 
      * @return  boolean
      */
@@ -172,13 +173,15 @@ class EngineEntry implements Serializable
     /**
      * Get an instance of an engine
      * 
+     * @param   mixed|null  $param  (optional)
+     * 
      * @return  \Opis\View\EngineInterface
      */
-    public function instance()
+    public function instance($param = null)
     {
         if ($this->instance === null) {
             $builder = $this->builder;
-            $this->instance = $builder();
+            $this->instance = $builder($param);
         }
 
         return $this->instance;
