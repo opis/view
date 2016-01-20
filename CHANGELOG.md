@@ -1,5 +1,12 @@
 CHANGELOG
 -----------
+### v4.1.1, 2016.01.20
+
+* Added an optional parameter to `Opis\View\EngineResolver::resolve` method and to the
+`Opis\View\EngineEntry::instance` method.
+* Added a new protected `param` property. The value of this property will be used as an argument when calling
+the `Opis\View\EngineResolver::resolve` method
+
 ### v4.1.0, 2016.01.16
 
 * Fixed a bug caused by the `uasort` function which behaves different in PHP 7 than it does in PHP 5
