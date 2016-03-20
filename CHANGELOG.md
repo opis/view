@@ -1,5 +1,9 @@
 CHANGELOG
 -----------
+### v4.1.2, 2016.03.20
+
+* Fixed a bug in `Route::getCompiler` method
+
 ### v4.1.1, 2016.01.20
 
 * Added an optional parameter to `Opis\View\EngineResolver::resolve` method and to the
