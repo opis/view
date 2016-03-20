@@ -54,9 +54,9 @@ class Route extends BaseRoute
         static $compiler = null;
 
         if ($compiler === null) {
-            $compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT | Compiler::CAPTURE_TRAIL));
+            $compiler = new Compiler('{', '}', '.', '?', (Compiler::CAPTURE_LEFT | Compiler::CAPTURE_TRAIL), '`', 'u', '[a-zA-Z0-9\/\,\-_%=]+');
         }
-        
+
         return $compiler;
     }
 
