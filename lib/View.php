@@ -34,7 +34,7 @@ class View implements ViewableInterface
      * @param   string  $name
      * @param   array   $arguments  (optional)
      */
-    public function __construct($name, array $arguments = array())
+    public function __construct(string $name, array $arguments = array())
     {
         $this->name = $name;
         $this->arguments = $arguments;
@@ -45,7 +45,7 @@ class View implements ViewableInterface
      * 
      * @return  string
      */
-    public function viewName()
+    public function viewName(): string
     {
         return $this->name;
     }
@@ -55,7 +55,7 @@ class View implements ViewableInterface
      * 
      * @return  array
      */
-    public function viewArguments()
+    public function viewArguments(): array
     {
         return $this->arguments;
     }

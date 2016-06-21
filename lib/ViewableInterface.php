@@ -28,12 +28,12 @@ interface ViewableInterface
      * 
      * @return  string
      */
-    public function viewName();
+    public function viewName(): string ;
 
     /**
      * Returns view's arguments
      * 
      * @return  array
      */
-    public function viewArguments();
+    public function viewArguments(): array ;
 }

@@ -40,7 +40,7 @@ class PHPEngine implements EngineInterface
      * 
      * @return  string
      */
-    public function build($path, array $data = array())
+    public function build(string $path, array $data = array()): string
     {
         $this->path = $path;
         $this->data = $data;

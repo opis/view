@@ -48,7 +48,7 @@ class ViewRouter implements Serializable
     /** @var    \Opis\View\RouteCollection */
     protected $collection;
 
-    /** @var    \Opis\Routing\Collections\FilterCollection */
+    /** @var    \Opis\Routing\FilterCollection */
     protected $filters;
     
     /** @var    mixed|null  */
@@ -62,7 +62,7 @@ class ViewRouter implements Serializable
      * @param   boolean                     $insertKey
      * @param   string                      $viewkey
      */
-    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, $insertKey = true, $viewkey = 'view')
+    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, $insertKey = true, $viewkey = 'this')
     {
         if ($collection === null) {
             $collection = new RouteCollection();
