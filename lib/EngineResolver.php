@@ -20,53 +20,27 @@
 
 namespace Opis\View;
 
-use Closure;
 use Serializable;
-use Opis\Closure\SerializableClosure;
 
 class EngineResolver implements Serializable
 {
-    /** @var    array */
+    /** @var EngineEntry[] */
     protected $engines = array();
 
-    /** @var    \Opis\View\EngineInterface */
-    protected $defaultEngine;
-
     /**
-     * Register a new engine
-     * 
-     * @param   Closure $builder
-     * @param   int     $priority
-     * 
-     * @return  \Opis\View\EngineEntry
+     * Register a new view engine
+     *
+     * @param callable $factory
+     * @param int $priority
+     * @return EngineEntry
      */
-    public function register(Closure $builder, $priority = 0)
+    public function register(callable $factory, $priority = 0): EngineEntry
     {
-        static $eq;
+        $entry = new EngineEntry($factory, $priority);
+        $this->engines[] = $entry;
 
-        if ($eq === null) {
-            $arr = array(array(0, 1), array(0, -1));
-            uasort($arr, function($a, $b) {
-                return 0;
-            });
-            $arr = reset($arr);
-            $eq = $arr[1];
-        }
-
-        $entry = new EngineEntry($builder);
-
-        $this->engines[] = array(
-            'engine' => $entry,
-            'priority' => $priority,
-        );
-
-        uasort($this->engines, function($a, $b) use($eq){
-            
-            if ($a['priority'] === $b['priority']) {
-                return $eq;
-            }
-            
-            return $a['priority'] < $b['priority'] ? 1 : -1;
+        uasort($this->engines, function(EngineEntry $a, EngineEntry $b){
+            return $a->getPriority() <=> $b->getPriority();
         });
 
         return $entry;
@@ -80,11 +54,9 @@ class EngineResolver implements Serializable
      * 
      * @return  \Opis\View\EngineInterface
      */
-    public function resolve($path, $param = null)
+    public function resolve(string $path, $param = null): EngineInterface
     {
-        foreach ($this->engines as &$entry) {
-            $engine = $entry['engine'];
-
+        foreach ($this->engines as $engine) {
             if ($engine->canHandle($path)) {
                 return $engine->instance($param);
             }
@@ -95,7 +67,7 @@ class EngineResolver implements Serializable
     /**
      * Get the default render engine
      * 
-     * @return \Opis\View\EngineInterface
+     * @return EngineInterface
      */
     protected function getDefaultEngine()
     {
@@ -123,95 +95,5 @@ class EngineResolver implements Serializable
     public function unserialize($data)
     {
         $this->engines = unserialize($data);
-    }
-}
-
-class EngineEntry implements Serializable
-{
-    /** @var    Closure */
-    protected $builder;
-
-    /** @var    Closure */
-    protected $handler;
-
-    /** @var    \Opis\View\EngineInterface */
-    protected $instance;
-
-    /**
-     * Constructor
-     * 
-     * @param   Closure $builder
-     */
-    public function __construct(Closure $builder)
-    {
-        $this->builder = $builder;
-    }
-
-    /**
-     * Add a handler callback
-     * 
-     * @param   Closure $handler
-     */
-    public function handle(Closure $handler)
-    {
-        $this->handler = $handler;
-    }
-
-    /**
-     * Check if the path can be handled
-     * 
-     * @param   string      $path
-     * 
-     * @return  boolean
-     */
-    public function canHandle($path)
-    {
-        $handler = $this->handler;
-        return $handler($path);
-    }
-
-    /**
-     * Get an instance of an engine
-     * 
-     * @param   mixed|null  $param  (optional)
-     * 
-     * @return  \Opis\View\EngineInterface
-     */
-    public function instance($param = null)
-    {
-        if ($this->instance === null) {
-            $builder = $this->builder;
-            $this->instance = $builder($param);
-        }
-
-        return $this->instance;
-    }
-
-    /**
-     * Serialize
-     * 
-     * @return  string
-     */
-    public function serialize()
-    {
-        SerializableClosure::enterContext();
-        $object = serialize(array(
-            'handler' => SerializableClosure::from($this->handler),
-            'builder' => SerializableClosure::from($this->builder),
-        ));
-        SerializableClosure::exitContext();
-        return $object;
-    }
-
-    /**
-     * Unserialize
-     * 
-     * @param   string  $data
-     */
-    public function unserialize($data)
-    {
-        $object = SerializableClosure::unserializeData($data);
-        $this->handler = $object['handler']->getClosure();
-        $this->builder = $object['builder']->getClosure();
     }
 }

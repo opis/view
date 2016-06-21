@@ -1,61 +1,168 @@
-CHANGELOG
------------
-### v4.1.2, 2016.03.20
+# Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
 
-* Fixed a bug in `Route::getCompiler` method
+## v5.0.x-dev
+### Added
+- Support for PHP 7.0.x
 
-### v4.1.1, 2016.01.20
+### Removed
+- Support for PHP 5.x
 
-* Added an optional parameter to `Opis\View\EngineResolver::resolve` method and to the
+### Changed
+- `Opis\View\EngineEntry` class was moved into its own file
+
+### Fixed
+- Nothing
+
+## v4.1.2 - 2016.03.20
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Nothing
+
+### Fixed
+- Fixed a bug in `Route::getCompiler` method
+
+## v4.1.1 - 2016.01.20
+### Added
+- Added an optional parameter to `Opis\View\EngineResolver::resolve` method and to the
 `Opis\View\EngineEntry::instance` method.
-* Added a new protected `param` property. The value of this property will be used as an argument when calling
+- Added a new protected `param` property. The value of this property will be used as an argument when calling
 the `Opis\View\EngineResolver::resolve` method
 
-### v4.1.0, 2016.01.16
+### Removed
+- Nothing
 
-* Fixed a bug caused by the `uasort` function which behaves different in PHP 7 than it does in PHP 5
-* Updated `opis/routing` library dependency to version `^4.1.0`
-* Modified `UserFilter` class to reflect changes
+### Changed
+- Nothing
 
-### v4.0.0, 2016.01.15
+### Fixed
+- Nothing
 
-* Fixed CS
-* Added tests
-* Updated `opis/routing` library dependency to version `4.0.*`
-* Updated `UserFilter` class in order to reflect changes made in `opis/routing` library
+## v4.1.0 - 2016.01.16
+### Added
+- Nothing
 
-### v3.1.0, 2015.08.30
+### Removed
+- Nothing
 
-* Removed `branch-alias` property from `composer.json` file
-* Added `resolveViewName` method in `ViewRouter` class
-* View names are now cached.
+### Changed
+- Updated `opis/routing` library dependency to version `^4.1.0`
+- Modified `UserFilter` class to reflect changes
 
-### v3.0.0, 2015.07.31
+### Fixed
+- Fixed a bug caused by the `uasort` function which behaves different in PHP 7 than it does in P
 
-* Updated `opis/routing` library dependency to version `3.0.*`
-* Fixed a small bug in `EngineResover::unserialize`
-* Fixed a bug in `ViewRouter`'s `renderView` method
-* Added `autoload.php` file
-* Added support for custom filtering
+## v4.0.0 - 2016.01.15
+### Added
+- Tests
 
-### v2.5.0, 2015.03.20
+### Removed
+- Nothing
 
-* Updated `opis/routing` library dependency to version `2.5.*`
+### Changed
+- Updated `opis/routing` library dependency to version `4.0.*`
+- Updated `UserFilter` class in order to reflect changes made in `opis/routing` library
 
-### v2.4.0, 2014.10.23
+### Fixed
+- CS
 
-* Updated `opis/routing` library dependency to version `2.4.*`
+## v3.1.0 - 2015.08.30
+### Added
+- `resolveViewName` method in `ViewRouter` class
 
-### v2.3.1, 2014.06.11
+### Removed
+- `branch-alias` property from `composer.json` file
 
-*  Fixed a bug in `Opis\View\Route`.
+### Changed
+- View names are now cached.
 
-### v2.3.0, 2014.06.11
+### Fixed
+- Nothing
 
-* Updated `opis/routing` library dependency to version `2.3.0`
-* Updated `Opis\View\Route` to reflect changes that were made in `opis/routing`
 
-### v2.2.0, 2014.06.04
+## v3.0.0 - 2015.07.31
+### Added
+- Autoload file
+- Support for custom filtering
 
-* Started changelog
-* Updated `opis/routing` dependency to version `2.2.*`
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` library dependency to version `3.0.*`
+
+### Fixed
+- Fixed a small bug in `EngineResover::unserialize`
+- Fixed a bug in `ViewRouter`'s `renderView` method
+
+## v2.5.0 - 2015.03.20
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` library dependency to version `2.5.*`
+
+### Fixed
+- Nothing
+
+## v2.4.0 - 2014.10.23
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` library dependency to version `2.4.*`
+
+### Fixed
+- Nothing
+
+## v2.3.1 - 2014.06.11
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Nothing
+
+### Fixed
+- Fixed a bug in `Opis\View\Route`.
+
+## v2.3.0 - 2014.06.11
+### Added
+- Nothing
+
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` library dependency to version `2.3.0`
+- Updated `Opis\View\Route` to reflect changes that were made in `opis/routing`
+
+### Fixed
+- Nothing
+
+## v2.2.0 - 2014.06.04
+### Added
+- Changelog
+
+### Removed
+- Nothing
+
+### Changed
+- Updated `opis/routing` dependency to version `2.2.*
+
+### Fixed
+- Nothing
