@@ -20,7 +20,7 @@
 
 namespace Opis\View;
 
-
+use Serializable;
 use Opis\Closure\SerializableClosure;
 
 class EngineEntry implements Serializable
@@ -45,7 +45,7 @@ class EngineEntry implements Serializable
     public function __construct(callable $factory, int $priority = 0)
     {
         $this->factory = $factory;
-        $this->priority;
+        $this->priority = $priority;
     }
 
     /**

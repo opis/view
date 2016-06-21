@@ -20,49 +20,47 @@
 
 namespace Opis\View;
 
-use Closure;
-use Serializable;
 use Opis\Routing\Path;
+use Opis\Routing\Route;
+use Serializable;
 use Opis\Routing\Router;
-use Opis\Routing\PathFilter;
 use Opis\Closure\SerializableClosure;
-use Opis\Routing\Collections\FilterCollection;
+use Opis\Routing\FilterCollection;
 
 class ViewRouter implements Serializable
 {
-    /** @var    array */
+    /** @var array */
     protected $cache;
 
-    /** @var    \Opis\Routing\Router */
+    /** @var Router*/
     protected $router;
 
-    /** @var    string */
+    /** @var string */
     protected $viewKey;
 
-    /** @var    \Opis\View\EngineResolver */
+    /** @var  EngineResolver */
     protected $resolver;
 
-    /** @var    boolean */
+    /** @var bool */
     protected $insertKey;
 
-    /** @var    \Opis\View\RouteCollection */
+    /** @var RouteCollection*/
     protected $collection;
 
-    /** @var    \Opis\Routing\FilterCollection */
+    /** @var  FilterCollection */
     protected $filters;
     
     /** @var    mixed|null  */
     protected $param;
 
     /**
-     * Constructor
-     * 
-     * @param   \Opis\View\RouteCollection  $collection
-     * @param   \Opis\View\EngineResolver   $resolver
-     * @param   boolean                     $insertKey
-     * @param   string                      $viewkey
+     * ViewRouter constructor.
+     * @param RouteCollection|null $collection
+     * @param EngineResolver|null $resolver
+     * @param bool $insertKey
+     * @param string $viewkey
      */
-    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, $insertKey = true, $viewkey = 'this')
+    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, bool $insertKey = true, string $viewkey = 'this')
     {
         if ($collection === null) {
             $collection = new RouteCollection();
@@ -75,33 +73,30 @@ class ViewRouter implements Serializable
         $this->cache = array();
         $this->collection = $collection;
         $this->resolver = $resolver;
-        $this->insertKey = (bool) $insertKey;
-        $this->viewKey = (string) $viewkey;
+        $this->insertKey = $insertKey;
+        $this->viewKey = $viewkey;
     }
 
     /**
      * Get filters
      * 
-     * @return  \Opis\Routing\Collections\FilterCollection
+     * @return  FilterCollection
      */
-    protected function getFilters()
+    protected function getFilters(): FilterCollection
     {
         if ($this->filters === null) {
-            $filters = new FilterCollection();
-            $filters[] = new PathFilter();
-            $filters[] = new UserFilter();
-            $this->filters = $filters;
+            $this->filters = new FilterCollection();
+            $this->filters->addFilter(new UserFilter());
         }
-
         return $this->filters;
     }
 
     /**
      * Get router
      * 
-     * @return  \Opis\Routing\Router
+     * @return  Router
      */
-    protected function getRouter()
+    protected function getRouter(): Router
     {
         if ($this->router === null) {
             $this->router = new Router($this->collection, null, $this->getFilters());
@@ -113,7 +108,7 @@ class ViewRouter implements Serializable
     /**
      * Get the collection of routes
      * 
-     * @return  \Opis\View\RouteCollection
+     * @return RouteCollection
      */
     public function routeCollection()
     {
@@ -123,7 +118,7 @@ class ViewRouter implements Serializable
     /**
      * Get the engine resolver instance
      * 
-     * @return  \Opis\View\EngineResolver
+     * @return  EngineResolver
      */
     public function engineResolver()
     {
@@ -137,12 +132,13 @@ class ViewRouter implements Serializable
      * @param   callable    $resolver
      * @param   int         $priority
      * 
-     * @return \Opis\View\Route
+     * @return Route
      */
-    public function handle($pattern, $resolver, $priority = 0)
+    public function handle(string $pattern, callable $resolver, int $priority = 0): Route
     {
-        $route = new Route($pattern, $resolver, $priority);
-        $this->collection[] = $route;
+        $route = new Route($pattern, $resolver);
+        $route->set('priority', $priority);
+        $this->collection->addRoute($route);
         $this->cache = array(); //clear cache
         return $route;
     }
@@ -150,11 +146,11 @@ class ViewRouter implements Serializable
     /**
      * Render a view
      * 
-     * @param   \Opis\View\ViewableInterface|mixed  $view
+     * @param   ViewableInterface|mixed  $view
      * 
-     * @return  mixed
+     * @return  string
      */
-    public function render($view)
+    public function render($view): string
     {
         if (!($view instanceof ViewableInterface)) {
             return $view;
@@ -163,7 +159,7 @@ class ViewRouter implements Serializable
         $path = $this->resolveViewName($view->viewName());
 
         if ($path === null) {
-            return null;
+            return '';
         }
 
         $engine = $this->resolver->resolve($path, $this->param);
@@ -185,7 +181,7 @@ class ViewRouter implements Serializable
      * 
      * @return  mixed
      */
-    public function renderView($name, array $arguments = array())
+    public function renderView(string $name, array $arguments = array())
     {
         return $this->render(new View($name, $arguments));
     }
@@ -197,13 +193,12 @@ class ViewRouter implements Serializable
      * 
      * @return  string
      */
-    public function resolveViewName($name)
+    public function resolveViewName(string $name): string
     {
         if (!isset($this->cache[$name])) {
             $this->collection->sort();
             $this->cache[$name] = $this->getRouter()->route(new Path($name));
         }
-
         return $this->cache[$name];
     }
 
@@ -233,7 +228,7 @@ class ViewRouter implements Serializable
      */
     public function unserialize($data)
     {
-        $object = SerializableClosure::unserializeData($data);
+        $object = unserialize($data);
 
         $this->resolver = $object['resolver'];
         $this->collection = $object['collection'];

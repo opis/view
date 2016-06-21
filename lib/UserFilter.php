@@ -22,23 +22,19 @@ namespace Opis\View;
 
 use Opis\Routing\Path;
 use Opis\Routing\Router;
-use Opis\Routing\Callback;
 use Opis\Routing\FilterInterface;
-use Opis\Routing\Route as BaseRoute;
+use Opis\Routing\Route;
 
 class UserFilter implements FilterInterface
 {
 
     /**
-     * Check if a route pass this filter
-     * 
-     * @param   \Opis\Routing\Router    $router
-     * @param   \Opis\Routing\Path      $path
-     * @param   \Opis\Routing\Route     $route
-     * 
-     * @return  boolean
+     * @param Path $path
+     * @param Route $route
+     * @param Router $router
+     * @return bool
      */
-    public function pass(Router $router, Path $path, BaseRoute $route)
+    public function pass(Path $path, Route $route, Router $router): bool
     {
         $filter = $route->get('filter');
 
@@ -46,11 +42,10 @@ class UserFilter implements FilterInterface
             return true;
         }
 
-        $callback = new Callback($filter);
-        $values = $route->compile()->bind($path);
-        $specials = $router->getSpecialValues();
-        $arguments = $callback->getArguments($values, $specials);
+        $values = $router->extract($path, $route);
+        $bindings = $router->bind($values, $route->getBindings());
+        $arguments = $router->buildArguments($filter, $bindings);
 
-        return $callback->invoke($arguments);
+        return $filter(...$arguments);
     }
 }

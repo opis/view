@@ -5,9 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## v5.0.x-dev
 ### Added
 - Support for PHP 7.0.x
+- `Opis\View\EngineEntry::getPriority` method
 
 ### Removed
 - Support for PHP 5.x
+- `Opis\View\Route` class
 
 ### Changed
 - `Opis\View\EngineEntry` class was moved into its own file

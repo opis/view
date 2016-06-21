@@ -131,7 +131,7 @@ class ViewsTest extends PHPUnit_Framework_TestCase
 class Engine1 implements EngineInterface
 {
 
-    public function build($path, array $data = array())
+    public function build(string $path, array $data = array()): string
     {
         return strtoupper($path);
     }
@@ -140,7 +140,7 @@ class Engine1 implements EngineInterface
 class Engine2 implements EngineInterface
 {
 
-    public function build($path, array $data = array())
+    public function build(string $path, array $data = array()): string
     {
         return strtoupper($path) . '!';
     }

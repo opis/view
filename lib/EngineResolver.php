@@ -27,6 +27,9 @@ class EngineResolver implements Serializable
     /** @var EngineEntry[] */
     protected $engines = array();
 
+    /** @var  EngineInterface */
+    protected $defaultEngine;
+
     /**
      * Register a new view engine
      *
@@ -40,7 +43,7 @@ class EngineResolver implements Serializable
         $this->engines[] = $entry;
 
         uasort($this->engines, function(EngineEntry $a, EngineEntry $b){
-            return $a->getPriority() <=> $b->getPriority();
+            return $a->getPriority() <= $b->getPriority() ? 1 : -1;
         });
 
         return $entry;
@@ -52,7 +55,7 @@ class EngineResolver implements Serializable
      * @param   string      $path
      * @param   mixed|null  $param  (optional)
      * 
-     * @return  \Opis\View\EngineInterface
+     * @return  EngineInterface
      */
     public function resolve(string $path, $param = null): EngineInterface
     {

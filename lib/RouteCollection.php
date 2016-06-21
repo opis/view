@@ -21,7 +21,9 @@
 namespace Opis\View;
 
 use Opis\Closure\SerializableClosure;
-use Opis\Routing\Collections\RouteCollection as BaseCollection;
+use Opis\Routing\Compiler;
+use Opis\Routing\Route;
+use Opis\Routing\RouteCollection as BaseCollection;
 
 class RouteCollection extends BaseCollection
 {
@@ -29,65 +31,44 @@ class RouteCollection extends BaseCollection
     protected $dirty = false;
 
     /**
-     * Sort all routes
+     * RouteCollection constructor
+     */
+    public function __construct()
+    {
+        parent::__construct(new Compiler([
+            Compiler::TAG_SEPARATOR => '.',
+            Compiler::CAPTURE_MODE => (Compiler::CAPTURE_LEFT | Compiler::CAPTURE_TRAIL),
+        ]));
+    }
+
+    /**
+     * Sort event handlers
      */
     public function sort()
     {
-        static $eq;
-
-        if ($this->dirty) {
-
-            if ($eq === null) {
-                $arr = array(array(0, 1), array(0, -1));
-                uasort($arr, function($a, $b){
-                    return 0;
-                });
-                $arr = reset($arr);
-                $eq = $arr[1];
-            }
-            
-            uasort($this->collection, function(&$a, &$b) use($eq) {
-                $v1 = $a->getPriority();
-                $v2 = $b->getPriority();
-                if ($v1 === $v2) {
-                    return $eq;
-                }
-                return $v1 < $v2 ? 1 : -1;
-            });
-
-            $this->dirty = false;
+        if (!$this->dirty) {
+            return;
         }
+
+        $this->regex = null;
+        uasort($this->routes, function (Route $a, Route $b) {
+            return $a->get('priority', 0) <= $b->get('priority', 0) ? 1 : -1;
+        });
+        $this->dirty = false;
     }
 
     /**
-     * Set offest
-     * 
-     * @param   mixed   $offset
-     * @param   mixed   $value
+     * @param Route $route
+     * @return RouteCollection
      */
-    public function offsetSet($offset, $value)
+    public function addRoute(Route $route): parent
     {
         $this->dirty = true;
-        parent::offsetSet($offset, $value);
-    }
-
-    /**
-     * Check value's type
-     * 
-     * @param \Opis\View\Route $value
-     * 
-     * @throws InvalidArgumentException
-     */
-    protected function checkType($value)
-    {
-        if (!($value instanceof Route)) {
-            throw new InvalidArgumentException('Expected \Opis\View\Route');
-        }
+        return parent::addRoute($route);
     }
 
     /**
      * Serialize
-     * 
      * @return  string
      */
     public function serialize()
@@ -96,7 +77,7 @@ class RouteCollection extends BaseCollection
 
         $object = serialize(array(
             'dirty' => $this->dirty,
-            'collection' => $this->collection,
+            'parent' => parent::serialize(),
         ));
 
         SerializableClosure::exitContext();
@@ -106,13 +87,13 @@ class RouteCollection extends BaseCollection
 
     /**
      * Unserialize
-     * 
-     * @param   string  $data
+     *
+     * @param   string $data
      */
     public function unserialize($data)
     {
-        $object = SerializableClosure::unserializeData($data);
+        $object = unserialize($data);
         $this->dirty = $object['dirty'];
-        $this->collection = $object['collection'];
+        parent::unserialize($object['data']);
     }
 }
