@@ -27,7 +27,7 @@ use Opis\Routing\Router;
 use Opis\Closure\SerializableClosure;
 use Opis\Routing\FilterCollection;
 
-class ViewRouter implements Serializable
+class ViewApp implements Serializable
 {
     /** @var array */
     protected $cache;
@@ -60,7 +60,7 @@ class ViewRouter implements Serializable
      * @param bool $insertKey
      * @param string $viewkey
      */
-    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, bool $insertKey = true, string $viewkey = 'this')
+    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, bool $insertKey = false, string $viewkey = 'this')
     {
         if ($collection === null) {
             $collection = new RouteCollection();
@@ -110,7 +110,7 @@ class ViewRouter implements Serializable
      * 
      * @return RouteCollection
      */
-    public function routeCollection()
+    public function getRouteCollection(): RouteCollection
     {
         return $this->collection;
     }
@@ -120,9 +120,17 @@ class ViewRouter implements Serializable
      * 
      * @return  EngineResolver
      */
-    public function engineResolver()
+    public function getEngineResolver(): EngineResolver
     {
         return $this->resolver;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getViewItem()
+    {
+        return $this;
     }
 
     /**
@@ -167,7 +175,7 @@ class ViewRouter implements Serializable
         $arguments = $view->viewArguments();
 
         if ($this->insertKey) {
-            $arguments[$this->viewKey] = $this;
+            $arguments[$this->viewKey] = $this->getViewItem();
         }
 
         return $engine->build($path, $arguments);
