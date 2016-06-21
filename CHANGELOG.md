@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Support for PHP 7.0.x
 - `Opis\View\EngineEntry::getPriority` method
+- `Opis\View\ViewApp::getViewItem` method
 
 ### Removed
 - Support for PHP 5.x
@@ -13,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - `Opis\View\EngineEntry` class was moved into its own file
+- `Opis\View\ViewRouter` was renamed to `Opis\View\ViewApp`
 
 ### Fixed
 - Nothing
