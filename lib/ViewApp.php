@@ -49,7 +49,10 @@ class ViewApp implements Serializable
 
     /** @var  FilterCollection */
     protected $filters;
-    
+
+    /** @var  mixed */
+    protected $viewItem;
+
     /** @var    mixed|null  */
     protected $param;
 
@@ -75,6 +78,7 @@ class ViewApp implements Serializable
         $this->resolver = $resolver;
         $this->insertKey = $insertKey;
         $this->viewKey = $viewkey;
+        $this->viewItem = $this;
     }
 
     /**
@@ -126,14 +130,6 @@ class ViewApp implements Serializable
     }
 
     /**
-     * @return mixed
-     */
-    public function getViewItem()
-    {
-        return $this;
-    }
-
-    /**
      * Register a new view
      * 
      * @param   string      $pattern
@@ -175,7 +171,7 @@ class ViewApp implements Serializable
         $arguments = $view->viewArguments();
 
         if ($this->insertKey) {
-            $arguments[$this->viewKey] = $this->getViewItem();
+            $arguments[$this->viewKey] = $this->viewItem;
         }
 
         return $engine->build($path, $arguments);
