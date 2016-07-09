@@ -63,7 +63,7 @@ class ViewApp implements Serializable
      * @param bool $insertKey
      * @param string $viewkey
      */
-    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, bool $insertKey = false, string $viewkey = 'this')
+    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, bool $insertKey = false, string $viewkey = 'app')
     {
         if ($collection === null) {
             $collection = new RouteCollection();
