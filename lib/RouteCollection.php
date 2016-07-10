@@ -94,6 +94,6 @@ class RouteCollection extends BaseCollection
     {
         $object = unserialize($data);
         $this->dirty = $object['dirty'];
-        parent::unserialize($object['data']);
+        parent::unserialize($object['parent']);
     }
 }
