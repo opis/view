@@ -27,9 +27,6 @@ class EngineResolver implements Serializable
     /** @var EngineEntry[] */
     protected $engines = array();
 
-    /** @var  EngineInterface */
-    protected $defaultEngine;
-
     /** @var  ViewApp */
     protected $viewApp;
 
@@ -74,21 +71,9 @@ class EngineResolver implements Serializable
                 return $engine->instance($this->viewApp);
             }
         }
-        return $this->getDefaultEngine();
+        return $this->viewApp->getDefaultEngine();
     }
 
-    /**
-     * Get the default render engine
-     * 
-     * @return EngineInterface
-     */
-    protected function getDefaultEngine()
-    {
-        if ($this->defaultEngine === null) {
-            $this->defaultEngine = new PHPEngine();
-        }
-        return $this->defaultEngine;
-    }
 
     /**
      * Serialize

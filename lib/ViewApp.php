@@ -44,6 +44,9 @@ class ViewApp implements Serializable
     /** @var  FilterCollection */
     protected $filters;
 
+    /** @var  EngineInterface */
+    protected $defaultEngine;
+
     /**
      * ViewRouter constructor.
      * @param RouteCollection|null $collection
@@ -112,6 +115,20 @@ class ViewApp implements Serializable
     public function getEngineResolver(): EngineResolver
     {
         return $this->resolver;
+    }
+
+    /**
+     * Get the default render engine
+     *
+     * @return EngineInterface
+     */
+    public function getDefaultEngine(): EngineInterface
+    {
+        if($this->defaultEngine === null){
+            $this->defaultEngine = new PHPEngine();
+        }
+
+        return $this->defaultEngine;
     }
 
     /**
