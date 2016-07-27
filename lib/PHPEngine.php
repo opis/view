@@ -31,18 +31,6 @@ class PHPEngine implements EngineInterface
     protected $data;
 
     /**
-     * @param $viewItem
-     * @return array
-     */
-    public function defaultValues($viewItem): array
-    {
-        return [
-            'app' => $viewItem,
-        ];
-    }
-
-
-    /**
      * Build
      * 
      * @throws Exception
@@ -57,6 +45,8 @@ class PHPEngine implements EngineInterface
         $this->path = $path;
         $this->data = $data;
 
+        unset($path, $data);
+
         ob_start();
 
         extract($this->data);
@@ -68,11 +58,8 @@ class PHPEngine implements EngineInterface
             throw $e;
         }
 
-        $result = ob_get_clean();
+        $this->path = $this->data = null;
 
-        unset($this->path);
-        unset($this->data);
-
-        return $result;
+        return ob_get_clean();
     }
 }

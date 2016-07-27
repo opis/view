@@ -30,6 +30,17 @@ class EngineResolver implements Serializable
     /** @var  EngineInterface */
     protected $defaultEngine;
 
+    /** @var  ViewApp */
+    protected $viewApp;
+
+    /**
+     * @param ViewApp $viewApp
+     */
+    public function setViewApp(ViewApp $viewApp)
+    {
+        $this->viewApp = $viewApp;
+    }
+
     /**
      * Register a new view engine
      *
@@ -53,15 +64,14 @@ class EngineResolver implements Serializable
      * Resolve a path to a render engine
      * 
      * @param   string      $path
-     * @param   mixed|null  $param  (optional)
      * 
      * @return  EngineInterface
      */
-    public function resolve(string $path, $param = null): EngineInterface
+    public function resolve(string $path): EngineInterface
     {
         foreach ($this->engines as $engine) {
             if ($engine->canHandle($path)) {
-                return $engine->instance($param);
+                return $engine->instance($this->viewApp);
             }
         }
         return $this->getDefaultEngine();

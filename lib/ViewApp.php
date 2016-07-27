@@ -44,12 +44,6 @@ class ViewApp implements Serializable
     /** @var  FilterCollection */
     protected $filters;
 
-    /** @var    mixed|null  */
-    protected $param;
-
-    /** @var  mixed */
-    protected $viewItem;
-
     /**
      * ViewRouter constructor.
      * @param RouteCollection|null $collection
@@ -65,10 +59,11 @@ class ViewApp implements Serializable
             $resolver = new EngineResolver();
         }
 
+        $resolver->setViewApp($this);
+
         $this->cache = array();
         $this->collection = $collection;
         $this->resolver = $resolver;
-        $this->viewItem = null;
     }
 
     /**
@@ -156,12 +151,9 @@ class ViewApp implements Serializable
             return '';
         }
 
-        $engine = $this->resolver->resolve($path, $this->param);
+        $engine = $this->resolver->resolve($path);
 
-        $arguments = $view->viewArguments();
-        $arguments += $engine->defaultValues($this->viewItem);
-
-        return $engine->build($path, $arguments);
+        return $engine->build($path, $view->viewArguments());
     }
 
     /**
@@ -204,8 +196,6 @@ class ViewApp implements Serializable
         $object = serialize(array(
             'resolver' => $this->resolver,
             'collection' => $this->collection,
-            'insertKey' => $this->insertKey,
-            'viewKey' => $this->viewKey
         ));
         SerializableClosure::exitContext();
 
@@ -223,7 +213,5 @@ class ViewApp implements Serializable
 
         $this->resolver = $object['resolver'];
         $this->collection = $object['collection'];
-        $this->insertKey = $object['insertKey'];
-        $this->viewKey = $object['viewKey'];
     }
 }
