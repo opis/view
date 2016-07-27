@@ -22,5 +22,16 @@ namespace Opis\View;
 
 interface EngineInterface
 {
-    function build(string $path, array $data = array()): string;
+    /**
+     * @param $viewItem
+     * @return array
+     */
+    public function defaultValues($viewItem): array;
+
+    /**
+     * @param string $path
+     * @param array $data
+     * @return string
+     */
+    public function build(string $path, array $data = array()): string;
 }

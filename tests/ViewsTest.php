@@ -17,17 +17,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * ============================================================================ */
-use Opis\View\ViewRouter;
+use Opis\View\ViewApp;
 use Opis\View\EngineInterface;
 
 class ViewsTest extends PHPUnit_Framework_TestCase
 {
-    /** @var    \Opis\View\ViewRouter */
+    /** @var    \Opis\View\ViewApp */
     protected $view;
 
     public function setUp()
     {
-        $this->view = new ViewRouter();
+        $this->view = new ViewApp();
     }
 
     public function testResolve()
@@ -130,6 +130,10 @@ class ViewsTest extends PHPUnit_Framework_TestCase
 
 class Engine1 implements EngineInterface
 {
+    public function defaultValues($viewItem): array
+    {
+        return [];
+    }
 
     public function build(string $path, array $data = array()): string
     {
@@ -139,6 +143,10 @@ class Engine1 implements EngineInterface
 
 class Engine2 implements EngineInterface
 {
+    public function defaultValues($viewItem): array
+    {
+        return [];
+    }
 
     public function build(string $path, array $data = array()): string
     {

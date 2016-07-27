@@ -31,6 +31,18 @@ class PHPEngine implements EngineInterface
     protected $data;
 
     /**
+     * @param $viewItem
+     * @return array
+     */
+    public function defaultValues($viewItem): array
+    {
+        return [
+            'app' => $viewItem,
+        ];
+    }
+
+
+    /**
      * Build
      * 
      * @throws Exception

@@ -35,14 +35,8 @@ class ViewApp implements Serializable
     /** @var Router*/
     protected $router;
 
-    /** @var string */
-    protected $viewKey;
-
     /** @var  EngineResolver */
     protected $resolver;
-
-    /** @var bool */
-    protected $insertKey;
 
     /** @var RouteCollection*/
     protected $collection;
@@ -50,20 +44,18 @@ class ViewApp implements Serializable
     /** @var  FilterCollection */
     protected $filters;
 
-    /** @var  mixed */
-    protected $viewItem;
-
     /** @var    mixed|null  */
     protected $param;
+
+    /** @var  mixed */
+    protected $viewItem;
 
     /**
      * ViewRouter constructor.
      * @param RouteCollection|null $collection
      * @param EngineResolver|null $resolver
-     * @param bool $insertKey
-     * @param string $viewkey
      */
-    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, bool $insertKey = false, string $viewkey = 'app')
+    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null)
     {
         if ($collection === null) {
             $collection = new RouteCollection();
@@ -76,9 +68,7 @@ class ViewApp implements Serializable
         $this->cache = array();
         $this->collection = $collection;
         $this->resolver = $resolver;
-        $this->insertKey = $insertKey;
-        $this->viewKey = $viewkey;
-        $this->viewItem = $this;
+        $this->viewItem = null;
     }
 
     /**
@@ -169,10 +159,7 @@ class ViewApp implements Serializable
         $engine = $this->resolver->resolve($path, $this->param);
 
         $arguments = $view->viewArguments();
-
-        if ($this->insertKey) {
-            $arguments[$this->viewKey] = $this->viewItem;
-        }
+        $arguments += $engine->defaultValues($this->viewItem);
 
         return $engine->build($path, $arguments);
     }
