@@ -20,7 +20,7 @@
 
 namespace Opis\View;
 
-use Opis\Routing\Path;
+use Opis\Routing\Context;
 use Opis\Routing\Route;
 use Serializable;
 use Opis\Routing\Router;
@@ -197,7 +197,7 @@ class ViewApp implements Serializable
     {
         if (!isset($this->cache[$name])) {
             $this->collection->sort();
-            $this->cache[$name] = $this->getRouter()->route(new Path($name));
+            $this->cache[$name] = $this->getRouter()->route(new Context($name));
         }
         return $this->cache[$name];
     }
