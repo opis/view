@@ -67,7 +67,7 @@ class ViewsTest extends PHPUnit_Framework_TestCase
 
     public function testEngine()
     {
-        $this->view->engineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function() {
             return new Engine1();
         })->handle(function($path) {
             return true;
@@ -82,13 +82,13 @@ class ViewsTest extends PHPUnit_Framework_TestCase
 
     public function testEnginePriority1()
     {
-        $this->view->engineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function() {
             return new Engine1();
         })->handle(function($path) {
             return true;
         });
 
-        $this->view->engineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function() {
             return new Engine2();
         })->handle(function($path) {
             return true;
@@ -103,13 +103,13 @@ class ViewsTest extends PHPUnit_Framework_TestCase
 
     public function testEnginePriority2()
     {
-        $this->view->engineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function() {
             return new Engine1();
         }, 1)->handle(function($path) {
             return true;
         });
 
-        $this->view->engineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function() {
             return new Engine2();
         })->handle(function($path) {
             return true;
