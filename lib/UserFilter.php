@@ -20,7 +20,7 @@
 
 namespace Opis\View;
 
-use Opis\Routing\Path;
+use Opis\Routing\Context;
 use Opis\Routing\Router;
 use Opis\Routing\FilterInterface;
 use Opis\Routing\Route;
@@ -29,12 +29,12 @@ class UserFilter implements FilterInterface
 {
 
     /**
-     * @param Path $path
+     * @param Context $context
      * @param Route $route
      * @param Router $router
      * @return bool
      */
-    public function pass(Path $path, Route $route, Router $router): bool
+    public function pass(Router $router, Context $context, Route $route): bool
     {
         $filter = $route->get('filter');
 
@@ -42,7 +42,7 @@ class UserFilter implements FilterInterface
             return true;
         }
 
-        $values = $router->extract($path, $route);
+        $values = $router->extract($context, $route);
         $bindings = $router->bind($values, $route->getBindings());
         $arguments = $router->buildArguments($filter, $bindings);
 
