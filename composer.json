@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Opis\\View\\": "lib/"
+            "Opis\\View\\": "src/"
         }
     },
     "autoload-dev": {
