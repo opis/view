@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2013-2016 The Opis Project
+ * Copyright 2013-2017 The Opis Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -170,13 +170,13 @@ class ViewApp implements Serializable
     /**
      * Render a view
      * 
-     * @param   ViewableInterface|mixed  $view
+     * @param   IView|mixed  $view
      * 
      * @return  string
      */
     public function render($view): string
     {
-        if (!($view instanceof ViewableInterface)) {
+        if (!($view instanceof IView)) {
             return $view;
         }
 
