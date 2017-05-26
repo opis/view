@@ -47,7 +47,11 @@ class ViewsTest extends PHPUnit_Framework_TestCase
             return 'baz';
         });
 
-        $this->assertEquals('baz', $this->view->resolveViewName('foo'));
+        $this->view->handle('foo', function() {
+            return 'qux';
+        });
+
+        $this->assertEquals('qux', $this->view->resolveViewName('foo'));
     }
 
     public function testResolvePriority()
