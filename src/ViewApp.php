@@ -99,7 +99,7 @@ class ViewApp implements Serializable
     protected function getRouter(): Router
     {
         if ($this->router === null) {
-            $this->router = new Router($this->getDispatcher(), $this->collection, $this->getRouteCollection());
+            $this->router = new Router($this->getDispatcher(), $this->collection, $this->getFilters());
         }
 
         return $this->router;
