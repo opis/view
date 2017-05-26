@@ -17,12 +17,12 @@
 
 namespace Opis\View;
 
-use Opis\Routing\Context;
-use Opis\Routing\Router;
-use Opis\Routing\FilterInterface;
-use Opis\Routing\Route;
+use Opis\Routing\{
+    Context, IFilter, Route, Router
+};
 
-class UserFilter implements FilterInterface
+
+class UserFilter implements IFilter
 {
 
     /**
@@ -39,9 +39,8 @@ class UserFilter implements FilterInterface
             return true;
         }
 
-        $values = $router->extract($context, $route);
-        $bindings = $router->bind($values, $route->getBindings());
-        $arguments = $router->buildArguments($filter, $bindings);
+        $compiled = $router->getDispatcher()->compile($route);
+        $arguments = $compiled->getArguments($filter);
 
         return $filter(...$arguments);
     }
