@@ -48,19 +48,43 @@ class RouteCollection extends BaseCollection
         }
 
         $this->regex = null;
-
-
-        uasort($this->routes, function (Route $a, Route $b) {
-            $r = $b->get('priority', 0) <=> $a->get('priority', 0);
-            return $r === 0 ? 1 : $r;
-        });
-
         $this->dirty = false;
+
+        $length = count($this->routes) - 1;
+
+        if($length <= 0){
+            return;
+        }
+
+        /** @var string[] $keys */
+        $keys = array_reverse(array_keys($this->routes));
+        /** @var Route[] $values */
+        $values = array_reverse(array_values($this->routes));
+
+        $done = false;
+
+        while (!$done){
+            $done = true;
+            for ($i = 0; $i < $length; $i++){
+                if(($values[$i]->get('priority') <=> $values[$i + 1]->get('priority')) < 0){
+                    $vtmp = $values[$i + 1];
+                    $ktmp = $keys[$i + 1];
+                    $values[$i + 1] = $values[$i];
+                    $keys[$i + 1] = $keys[$i];
+                    $values[$i] = $vtmp;
+                    $keys[$i] = $ktmp;
+                    $done = false;
+                }
+                echo $i;
+            }
+        }
+
+        $this->routes = array_combine($keys, $values);
     }
 
     /**
      * @param Route $route
-     * @return RouteCollection
+     * @return BaseCollection
      */
     public function addRoute(Route $route): parent
     {
@@ -75,6 +99,8 @@ class RouteCollection extends BaseCollection
     public function serialize()
     {
         SerializableClosure::enterContext();
+
+        $this->sort();
 
         $object = serialize(array(
             'dirty' => $this->dirty,
