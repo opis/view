@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2013-2016 The Opis Project
+ * Copyright 2013-2017 The Opis Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 namespace Opis\View;
 
 use Opis\Routing\Context;
+use Opis\Routing\Dispatcher;
+use Opis\Routing\IDispatcher;
 use Opis\Routing\Route;
 use Serializable;
 use Opis\Routing\Router;
@@ -32,16 +34,19 @@ class ViewApp implements Serializable
     /** @var Router*/
     protected $router;
 
-    /** @var  EngineResolver */
+    /** @var Dispatcher */
+    protected $dispatcher;
+
+    /** @var EngineResolver */
     protected $resolver;
 
     /** @var RouteCollection*/
     protected $collection;
 
-    /** @var  FilterCollection */
+    /** @var FilterCollection */
     protected $filters;
 
-    /** @var  EngineInterface */
+    /** @var EngineInterface */
     protected $defaultEngine;
 
     /**
@@ -66,7 +71,7 @@ class ViewApp implements Serializable
 
         $resolver->setViewApp($this);
 
-        $this->cache = array();
+        $this->cache = [];
         $this->collection = $collection;
         $this->resolver = $resolver;
         $this->defaultEngine = $engine;
@@ -94,10 +99,24 @@ class ViewApp implements Serializable
     protected function getRouter(): Router
     {
         if ($this->router === null) {
-            $this->router = new Router($this->collection, null, $this->getFilters());
+            $this->router = new Router($this->collection, $this->getDispatcher(), $this->getFilters());
         }
 
         return $this->router;
+    }
+
+    /**
+     * Get the dispatcher
+     *
+     * @return IDispatcher
+     */
+    protected function getDispatcher(): IDispatcher
+    {
+        if($this->dispatcher === null){
+            $this->dispatcher = new Dispatcher();
+        }
+
+        return $this->dispatcher;
     }
 
     /**
@@ -144,20 +163,20 @@ class ViewApp implements Serializable
         $route = new Route($pattern, $resolver);
         $route->set('priority', $priority);
         $this->collection->addRoute($route);
-        $this->cache = array(); //clear cache
+        $this->cache = []; //clear cache
         return $route;
     }
 
     /**
      * Render a view
      * 
-     * @param   ViewableInterface|mixed  $view
+     * @param   IView|mixed  $view
      * 
      * @return  string
      */
     public function render($view): string
     {
-        if (!($view instanceof ViewableInterface)) {
+        if (!($view instanceof IView)) {
             return $view;
         }
 

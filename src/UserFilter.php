@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2013-2016 The Opis Project
+ * Copyright 2013-2017 The Opis Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 
 namespace Opis\View;
 
-use Opis\Routing\Context;
-use Opis\Routing\Router;
-use Opis\Routing\FilterInterface;
-use Opis\Routing\Route;
+use Opis\Routing\{
+    Context, IFilter, Route, Router
+};
 
-class UserFilter implements FilterInterface
+
+class UserFilter implements IFilter
 {
 
     /**
@@ -39,9 +39,8 @@ class UserFilter implements FilterInterface
             return true;
         }
 
-        $values = $router->extract($context, $route);
-        $bindings = $router->bind($values, $route->getBindings());
-        $arguments = $router->buildArguments($filter, $bindings);
+        $compiled = $router->getDispatcher()->compile($route);
+        $arguments = $compiled->getArguments($filter);
 
         return $filter(...$arguments);
     }

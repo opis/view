@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2013-2016 The Opis Project
+ * Copyright 2013-2017 The Opis Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,11 @@ class ViewsTest extends PHPUnit_Framework_TestCase
             return 'baz';
         });
 
-        $this->assertEquals('baz', $this->view->resolveViewName('foo'));
+        $this->view->handle('foo', function() {
+            return 'qux';
+        });
+
+        $this->assertEquals('qux', $this->view->resolveViewName('foo'));
     }
 
     public function testResolvePriority()
