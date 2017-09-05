@@ -33,7 +33,7 @@ class RouteCollection extends BaseCollection
     public function __construct()
     {
         parent::__construct(new Compiler([
-            Compiler::TAG_SEPARATOR => '.',
+            Compiler::SEPARATOR_MARK => '.',
             Compiler::CAPTURE_MODE => (Compiler::CAPTURE_LEFT | Compiler::CAPTURE_TRAIL),
         ]));
     }

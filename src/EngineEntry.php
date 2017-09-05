@@ -38,6 +38,7 @@ class EngineEntry implements Serializable
      * Constructor
      *
      * @param  callable $factory
+     * @param int   $priority (optional)
      */
     public function __construct(callable $factory, int $priority = 0)
     {
