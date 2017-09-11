@@ -75,7 +75,6 @@ class RouteCollection extends BaseCollection
                     $keys[$i] = $ktmp;
                     $done = false;
                 }
-                echo $i;
             }
         }
 
