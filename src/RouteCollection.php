@@ -92,34 +92,22 @@ class RouteCollection extends BaseCollection
     }
 
     /**
-     * Serialize
-     * @return  string
+     * @inheritdoc
      */
-    public function serialize()
+    protected function getSerialize()
     {
-        SerializableClosure::enterContext();
-
-        $this->sort();
-
-        $object = serialize(array(
+        return [
+            'parent' => parent::getSerialize(),
             'dirty' => $this->dirty,
-            'parent' => $this->getSerialize(),
-        ));
-
-        SerializableClosure::exitContext();
-
-        return $object;
+        ];
     }
 
     /**
-     * Unserialize
-     *
-     * @param   string $data
+     * @inheritdoc
      */
-    public function unserialize($data)
+    protected function setUnserialize($object)
     {
-        $object = unserialize($data);
         $this->dirty = $object['dirty'];
-        $this->setUnserialize($object['parent']);
+        parent::setUnserialize($object['parent']);
     }
 }
