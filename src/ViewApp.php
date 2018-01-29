@@ -194,11 +194,12 @@ class ViewApp implements Serializable
 
     /**
      * Render a view
-     * 
-     * @param   string  $name
-     * @param   array   $arguments
-     * 
+     *
+     * @param   string $name
+     * @param   array $arguments
+     *
      * @return  mixed
+     * @throws \Exception
      */
     public function renderView(string $name, array $arguments = array())
     {
