@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2013-2017 The Opis Project
+ * Copyright 2013-2018 The Opis Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,9 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->view = new ViewApp();
     }
 
+    /**
+     * @throws Exception
+     */
     public function testResolve()
     {
         $this->view->handle('foo', function() {
@@ -37,6 +40,9 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('bar', $this->view->resolveViewName('foo'));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testResolveMultiple()
     {
         $this->view->handle('foo', function() {
@@ -54,6 +60,9 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('qux', $this->view->resolveViewName('foo'));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testResolvePriority()
     {
         $this->view->handle('foo', function() {
@@ -67,6 +76,9 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('bar', $this->view->resolveViewName('foo'));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testEngine()
     {
         $this->view->getEngineResolver()->register(function() {
@@ -82,6 +94,9 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('BAR', $this->view->renderView('foo'));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testEnginePriority1()
     {
         $this->view->getEngineResolver()->register(function() {
@@ -103,6 +118,9 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('BAR!', $this->view->renderView('foo'));
     }
 
+    /**
+     * @throws Exception
+     */
     public function testEnginePriority2()
     {
         $this->view->getEngineResolver()->register(function() {
@@ -123,7 +141,10 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals('BAR', $this->view->renderView('foo'));
     }
-    
+
+    /**
+     * @throws Exception
+     */
     public function testRenderMethod1()
     {
         $this->assertEquals('foo', $this->view->render('foo'));
