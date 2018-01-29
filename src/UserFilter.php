@@ -18,7 +18,7 @@
 namespace Opis\View;
 
 use Opis\Routing\{
-    Context, IFilter, Route as BaseRoute, Router
+    IFilter, Route as BaseRoute, Router
 };
 
 class UserFilter implements IFilter
@@ -26,7 +26,7 @@ class UserFilter implements IFilter
     /**
      * @inheritdoc
      */
-    public function filter(Router $router, Context $context, BaseRoute $route): bool
+    public function filter(Router $router, BaseRoute $route): bool
     {
         $filter = $route->get('filter');
 
@@ -34,7 +34,7 @@ class UserFilter implements IFilter
             return true;
         }
 
-        $compacted = $router->compact($route, $context);
+        $compacted = $router->compact($route);
         $arguments = $compacted->getArguments($filter);
 
         return $filter(...$arguments);

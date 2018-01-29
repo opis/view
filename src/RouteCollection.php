@@ -83,6 +83,7 @@ class RouteCollection extends BaseCollection
     /**
      * @param Route $route
      * @return BaseCollection
+     * @throws \Exception
      */
     public function addRoute(Route $route): parent
     {

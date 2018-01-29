@@ -150,12 +150,13 @@ class ViewApp implements Serializable
 
     /**
      * Register a new view
-     * 
-     * @param   string      $pattern
-     * @param   callable    $resolver
-     * @param   int         $priority
-     * 
+     *
+     * @param   string $pattern
+     * @param   callable $resolver
+     * @param   int $priority
+     *
      * @return Route
+     * @throws \Exception
      */
     public function handle(string $pattern, callable $resolver, int $priority = 0): Route
     {
@@ -168,10 +169,11 @@ class ViewApp implements Serializable
 
     /**
      * Render a view
-     * 
-     * @param   IView|mixed  $view
-     * 
+     *
+     * @param   IView|mixed $view
+     *
      * @return  string
+     * @throws \Exception
      */
     public function render($view): string
     {
