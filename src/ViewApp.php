@@ -156,7 +156,6 @@ class ViewApp implements Serializable
      * @param   int $priority
      *
      * @return Route
-     * @throws \Exception
      */
     public function handle(string $pattern, callable $resolver, int $priority = 0): Route
     {
@@ -173,7 +172,6 @@ class ViewApp implements Serializable
      * @param   IView|mixed $view
      *
      * @return  string
-     * @throws \Exception
      */
     public function render($view): string
     {
@@ -199,7 +197,6 @@ class ViewApp implements Serializable
      * @param   array $arguments
      *
      * @return  mixed
-     * @throws \Exception
      */
     public function renderView(string $name, array $arguments = array())
     {
@@ -212,7 +209,6 @@ class ViewApp implements Serializable
      * @param   string $name
      *
      * @return  string
-     * @throws \Exception
      */
     public function resolveViewName(string $name): string
     {

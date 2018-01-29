@@ -28,9 +28,6 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->view = new ViewApp();
     }
 
-    /**
-     * @throws Exception
-     */
     public function testResolve()
     {
         $this->view->handle('foo', function () {
@@ -40,9 +37,6 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('bar', $this->view->resolveViewName('foo'));
     }
 
-    /**
-     * @throws Exception
-     */
     public function testResolveMultiple()
     {
         $this->view->handle('foo', function () {
@@ -60,9 +54,6 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('qux', $this->view->resolveViewName('foo'));
     }
 
-    /**
-     * @throws Exception
-     */
     public function testResolvePriority()
     {
         $this->view->handle('foo', function () {
@@ -76,9 +67,6 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('bar', $this->view->resolveViewName('foo'));
     }
 
-    /**
-     * @throws Exception
-     */
     public function testEngine()
     {
         $this->view->getEngineResolver()->register(function () {
@@ -94,9 +82,6 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('BAR', $this->view->renderView('foo'));
     }
 
-    /**
-     * @throws Exception
-     */
     public function testEnginePriority1()
     {
         $this->view->getEngineResolver()->register(function () {

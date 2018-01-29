@@ -30,12 +30,11 @@ class PHPEngine implements EngineInterface
     /**
      * Build
      *
-     * @throws Exception
-     *
      * @param   string $path
      * @param   array $data
      *
      * @return  string
+     * @throws Exception
      */
     public function build(string $path, array $data = array()): string
     {
