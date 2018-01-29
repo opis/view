@@ -47,7 +47,7 @@ class EngineResolver implements Serializable
         $entry = new EngineEntry($factory, $priority);
         $this->engines[] = $entry;
 
-        uasort($this->engines, function(EngineEntry $a, EngineEntry $b){
+        uasort($this->engines, function (EngineEntry $a, EngineEntry $b) {
             return $a->getPriority() <= $b->getPriority() ? 1 : -1;
         });
 
@@ -56,9 +56,9 @@ class EngineResolver implements Serializable
 
     /**
      * Resolve a path to a render engine
-     * 
-     * @param   string      $path
-     * 
+     *
+     * @param   string $path
+     *
      * @return  EngineInterface
      */
     public function resolve(string $path): EngineInterface
@@ -74,7 +74,7 @@ class EngineResolver implements Serializable
 
     /**
      * Serialize
-     * 
+     *
      * @return  string
      */
     public function serialize()
@@ -84,8 +84,8 @@ class EngineResolver implements Serializable
 
     /**
      * Unserialize
-     * 
-     * @param   string  $data
+     *
+     * @param   string $data
      */
     public function unserialize($data)
     {

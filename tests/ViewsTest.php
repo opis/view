@@ -33,7 +33,7 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
      */
     public function testResolve()
     {
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'bar';
         });
 
@@ -45,15 +45,15 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
      */
     public function testResolveMultiple()
     {
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'bar';
         });
 
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'baz';
         });
 
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'qux';
         });
 
@@ -65,11 +65,11 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
      */
     public function testResolvePriority()
     {
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'bar';
         }, 1);
 
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'baz';
         });
 
@@ -81,13 +81,13 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
      */
     public function testEngine()
     {
-        $this->view->getEngineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function () {
             return new Engine1();
-        })->handle(function($path) {
+        })->handle(function ($path) {
             return true;
         });
 
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'bar';
         });
 
@@ -99,19 +99,19 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
      */
     public function testEnginePriority1()
     {
-        $this->view->getEngineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function () {
             return new Engine1();
-        })->handle(function($path) {
+        })->handle(function ($path) {
             return true;
         });
 
-        $this->view->getEngineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function () {
             return new Engine2();
-        })->handle(function($path) {
+        })->handle(function ($path) {
             return true;
         });
 
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'bar';
         });
 
@@ -123,19 +123,19 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
      */
     public function testEnginePriority2()
     {
-        $this->view->getEngineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function () {
             return new Engine1();
-        }, 1)->handle(function($path) {
+        }, 1)->handle(function ($path) {
             return true;
         });
 
-        $this->view->getEngineResolver()->register(function() {
+        $this->view->getEngineResolver()->register(function () {
             return new Engine2();
-        })->handle(function($path) {
+        })->handle(function ($path) {
             return true;
         });
 
-        $this->view->handle('foo', function() {
+        $this->view->handle('foo', function () {
             return 'bar';
         });
 

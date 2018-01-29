@@ -38,7 +38,7 @@ class EngineEntry implements Serializable
      * Constructor
      *
      * @param  callable $factory
-     * @param int   $priority (optional)
+     * @param int $priority (optional)
      */
     public function __construct(callable $factory, int $priority = 0)
     {
@@ -59,7 +59,7 @@ class EngineEntry implements Serializable
     /**
      * Check if the path can be handled
      *
-     * @param   string      $path
+     * @param   string $path
      *
      * @return  boolean
      */
@@ -115,13 +115,13 @@ class EngineEntry implements Serializable
     /**
      * Unserialize
      *
-     * @param   string  $data
+     * @param   string $data
      */
     public function unserialize($data)
     {
         $object = unserialize($data);
-        foreach ($object as $key => &$value){
-            if($value instanceof SerializableClosure){
+        foreach ($object as $key => &$value) {
+            if ($value instanceof SerializableClosure) {
                 $value = $value->getClosure();
             }
             $this->{$key} = $value;

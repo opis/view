@@ -30,7 +30,7 @@ class ViewApp implements Serializable
     /** @var array */
     protected $cache;
 
-    /** @var Router*/
+    /** @var Router */
     protected $router;
 
     /** @var Dispatcher */
@@ -39,7 +39,7 @@ class ViewApp implements Serializable
     /** @var EngineResolver */
     protected $resolver;
 
-    /** @var RouteCollection*/
+    /** @var RouteCollection */
     protected $collection;
 
     /** @var FilterCollection */
@@ -64,7 +64,7 @@ class ViewApp implements Serializable
             $resolver = new EngineResolver();
         }
 
-        if($engine === null){
+        if ($engine === null) {
             $engine = new PHPEngine();
         }
 
@@ -78,7 +78,7 @@ class ViewApp implements Serializable
 
     /**
      * Get filters
-     * 
+     *
      * @return  FilterCollection
      */
     protected function getFilters(): FilterCollection
@@ -92,7 +92,7 @@ class ViewApp implements Serializable
 
     /**
      * Get router
-     * 
+     *
      * @return  Router
      */
     protected function getRouter(): Router
@@ -111,7 +111,7 @@ class ViewApp implements Serializable
      */
     protected function getDispatcher(): IDispatcher
     {
-        if($this->dispatcher === null){
+        if ($this->dispatcher === null) {
             $this->dispatcher = new Dispatcher();
         }
 
@@ -120,7 +120,7 @@ class ViewApp implements Serializable
 
     /**
      * Get the collection of routes
-     * 
+     *
      * @return RouteCollection
      */
     public function getRouteCollection(): RouteCollection
@@ -130,7 +130,7 @@ class ViewApp implements Serializable
 
     /**
      * Get the engine resolver instance
-     * 
+     *
      * @return  EngineResolver
      */
     public function getEngineResolver(): EngineResolver
@@ -225,7 +225,7 @@ class ViewApp implements Serializable
 
     /**
      * Serialize
-     * 
+     *
      * @return  string
      */
     public function serialize()
@@ -242,8 +242,8 @@ class ViewApp implements Serializable
 
     /**
      * Unserialize
-     * 
-     * @param   string   $data
+     *
+     * @param   string $data
      */
     public function unserialize($data)
     {

@@ -21,15 +21,15 @@ interface IView
 {
     /**
      * Returns view's name
-     * 
+     *
      * @return  string
      */
-    public function viewName(): string ;
+    public function viewName(): string;
 
     /**
      * Returns view's arguments
-     * 
+     *
      * @return  array
      */
-    public function viewArguments(): array ;
+    public function viewArguments(): array;
 }

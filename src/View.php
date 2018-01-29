@@ -27,9 +27,9 @@ class View implements IView
 
     /**
      * Constructor
-     * 
-     * @param   string  $name
-     * @param   array   $arguments  (optional)
+     *
+     * @param   string $name
+     * @param   array $arguments (optional)
      */
     public function __construct(string $name, array $arguments = array())
     {
@@ -39,7 +39,7 @@ class View implements IView
 
     /**
      * Return view's name
-     * 
+     *
      * @return  string
      */
     public function viewName(): string
@@ -49,7 +49,7 @@ class View implements IView
 
     /**
      * Return view's arguments
-     * 
+     *
      * @return  array
      */
     public function viewArguments(): array
