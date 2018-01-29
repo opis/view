@@ -17,11 +17,10 @@
 
 namespace Opis\View;
 
+use Serializable;
 use Opis\Routing\Context;
 use Opis\Routing\Dispatcher;
 use Opis\Routing\IDispatcher;
-use Opis\Routing\Route;
-use Serializable;
 use Opis\Routing\Router;
 use Opis\Closure\SerializableClosure;
 use Opis\Routing\FilterCollection;
@@ -206,10 +205,11 @@ class ViewApp implements Serializable
 
     /**
      * Resolve a view's name
-     * 
-     * @param   string  $name
-     * 
+     *
+     * @param   string $name
+     *
      * @return  string
+     * @throws \Exception
      */
     public function resolveViewName(string $name): string
     {

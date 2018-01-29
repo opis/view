@@ -17,8 +17,7 @@
 
 namespace Opis\View;
 
-use Opis\Closure\SerializableClosure;
-use Opis\Routing\Compiler;
+use Opis\Pattern\Builder;
 use Opis\Routing\Route;
 use Opis\Routing\RouteCollection as BaseCollection;
 
@@ -32,9 +31,9 @@ class RouteCollection extends BaseCollection
      */
     public function __construct()
     {
-        parent::__construct(new Compiler([
-            Compiler::SEGMENT_DELIMITER => '.',
-            Compiler::CAPTURE_MODE => (Compiler::CAPTURE_LEFT | Compiler::CAPTURE_TRAIL),
+        parent::__construct(new Builder([
+            Builder::SEGMENT_DELIMITER => '.',
+            Builder::CAPTURE_MODE => (Builder::CAPTURE_LEFT | Builder::CAPTURE_TRAIL),
         ]));
     }
 
@@ -66,7 +65,7 @@ class RouteCollection extends BaseCollection
         while (!$done){
             $done = true;
             for ($i = 0; $i < $length; $i++){
-                if(($values[$i]->get('priority') <=> $values[$i + 1]->get('priority')) < 0){
+                if(($values[$i]->priority <=> $values[$i + 1]->priority) < 0){
                     $vtmp = $values[$i + 1];
                     $ktmp = $keys[$i + 1];
                     $values[$i + 1] = $values[$i];

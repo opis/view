@@ -9,7 +9,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - Support for PHP 5.x
-- `Opis\View\Route` class
 
 ### Changed
 - `Opis\View\EngineEntry` class was moved into its own file

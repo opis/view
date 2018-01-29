@@ -18,7 +18,7 @@
 use Opis\View\ViewApp;
 use Opis\View\EngineInterface;
 
-class ViewsTest extends PHPUnit_Framework_TestCase
+class ViewsTest extends \PHPUnit\Framework\TestCase
 {
     /** @var    \Opis\View\ViewApp */
     protected $view;

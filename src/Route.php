@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2013-2017 The Opis Project
+ * Copyright 2014-2017 The Opis Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,26 +17,17 @@
 
 namespace Opis\View;
 
-use Opis\Routing\{
-    Context, IFilter, Route as BaseRoute, Router
-};
+use Opis\Routing\Route as BaseRoute;
 
-class UserFilter implements IFilter
+class Route extends BaseRoute
 {
     /**
-     * @inheritdoc
+     * @param callable $filter
+     * @return Route
      */
-    public function filter(Router $router, Context $context, BaseRoute $route): bool
+    public function filter(callable $filter): self
     {
-        $filter = $route->get('filter');
-
-        if (!is_callable($filter)) {
-            return true;
-        }
-
-        $compacted = $router->compact($route, $context);
-        $arguments = $compacted->getArguments($filter);
-
-        return $filter(...$arguments);
+        $this->set('filter', $filter);
+        return $this;
     }
 }
