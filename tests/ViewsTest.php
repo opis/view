@@ -103,9 +103,6 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('BAR!', $this->view->renderView('foo'));
     }
 
-    /**
-     * @throws Exception
-     */
     public function testEnginePriority2()
     {
         $this->view->getEngineResolver()->register(function () {
@@ -127,9 +124,6 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('BAR', $this->view->renderView('foo'));
     }
 
-    /**
-     * @throws Exception
-     */
     public function testRenderMethod1()
     {
         $this->assertEquals('foo', $this->view->render('foo'));
