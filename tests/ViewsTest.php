@@ -37,6 +37,11 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('bar', $this->view->resolveViewName('foo'));
     }
 
+    public function testResolveMissing()
+    {
+        $this->assertEquals(null, $this->view->resolveViewName('missing'));
+    }
+
     public function testResolveMultiple()
     {
         $this->view->handle('foo', function () {

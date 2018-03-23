@@ -208,13 +208,17 @@ class ViewApp implements Serializable
      *
      * @param   string $name
      *
-     * @return  string
+     * @return  string|null
      */
-    public function resolveViewName(string $name): string
+    public function resolveViewName(string $name)
     {
-        if (!isset($this->cache[$name])) {
+        if (!array_key_exists($name, $this->cache)) {
             $this->collection->sort();
-            $this->cache[$name] = $this->getRouter()->route(new Context($name));
+            $view = $this->getRouter()->route(new Context($name));
+            if (!is_string($view)) {
+                $view = null;
+            }
+            $this->cache[$name] = $view;
         }
         return $this->cache[$name];
     }
