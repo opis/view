@@ -36,7 +36,7 @@ class PHPEngine implements EngineInterface
      * @return  string
      * @throws Exception
      */
-    public function build(string $path, array $data = array()): string
+    public function build(string $path, array $data = []): string
     {
         $this->path = $path;
         $this->data = $data;

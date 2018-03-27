@@ -31,7 +31,7 @@ class View implements IView
      * @param   string $name
      * @param   array $arguments (optional)
      */
-    public function __construct(string $name, array $arguments = array())
+    public function __construct(string $name, array $arguments = [])
     {
         $this->name = $name;
         $this->arguments = $arguments;

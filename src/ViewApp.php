@@ -54,8 +54,11 @@ class ViewApp implements Serializable
      * @param EngineResolver|null $resolver
      * @param EngineInterface|null $engine
      */
-    public function __construct(RouteCollection $collection = null, EngineResolver $resolver = null, EngineInterface $engine = null)
-    {
+    public function __construct(
+        RouteCollection $collection = null,
+        EngineResolver $resolver = null,
+        EngineInterface $engine = null
+    ) {
         if ($collection === null) {
             $collection = new RouteCollection();
         }
@@ -195,7 +198,7 @@ class ViewApp implements Serializable
      *
      * @return  mixed
      */
-    public function renderView(string $name, array $arguments = array())
+    public function renderView(string $name, array $arguments = [])
     {
         return $this->render(new View($name, $arguments));
     }
@@ -228,10 +231,10 @@ class ViewApp implements Serializable
     public function serialize()
     {
         SerializableClosure::enterContext();
-        $object = serialize(array(
+        $object = serialize([
             'resolver' => $this->resolver,
             'collection' => $this->collection,
-        ));
+        ]);
         SerializableClosure::exitContext();
 
         return $object;

@@ -26,5 +26,5 @@ interface EngineInterface
      * @param array $data
      * @return string
      */
-    public function build(string $path, array $data = array()): string;
+    public function build(string $path, array $data = []): string;
 }

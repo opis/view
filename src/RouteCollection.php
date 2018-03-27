@@ -30,7 +30,13 @@ class RouteCollection extends BaseCollection
      */
     public function __construct()
     {
-        $factory = function (RouteCollection $collection, string $id, string $pattern, callable $action, string $name = null) {
+        $factory = function (
+            RouteCollection $collection,
+            string $id,
+            string $pattern,
+            callable $action,
+            string $name = null
+        ) {
             return new Route($collection, $id, $pattern, $action, $name);
         };
         parent::__construct($factory, new Builder([

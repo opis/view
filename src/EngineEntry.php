@@ -104,10 +104,10 @@ class EngineEntry implements Serializable
     public function serialize()
     {
         SerializableClosure::enterContext();
-        $object = serialize(array(
+        $object = serialize([
             'handler' => $this->handler instanceof \Closure ? SerializableClosure::from($this->handler) : $this->handler,
-            'factory' => $this->factory instanceof \Closure ? SerializableClosure::from($this->factory) : $this->factory
-        ));
+            'factory' => $this->factory instanceof \Closure ? SerializableClosure::from($this->factory) : $this->factory,
+        ]);
         SerializableClosure::exitContext();
         return $object;
     }
