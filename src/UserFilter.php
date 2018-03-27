@@ -34,8 +34,8 @@ class UserFilter implements IFilter
             return true;
         }
 
-        $compacted = $router->compact($route);
-        $arguments = $compacted->getArguments($filter);
+        $invoker = $router->resolveInvoker($route);
+        $arguments = $invoker->getArgumentResolver()->resolve($filter);
 
         return $filter(...$arguments);
     }

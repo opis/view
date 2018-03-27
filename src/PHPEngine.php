@@ -48,6 +48,7 @@ class PHPEngine implements EngineInterface
         extract($this->data);
 
         try {
+            /** @noinspection PhpIncludeInspection */
             include $this->path;
         } catch (Exception $e) {
             ob_get_clean();

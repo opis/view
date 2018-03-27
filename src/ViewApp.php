@@ -159,11 +159,8 @@ class ViewApp implements Serializable
      */
     public function handle(string $pattern, callable $resolver, int $priority = 0): Route
     {
-        $route = new Route($pattern, $resolver);
-        $route->set('priority', $priority);
-        $this->collection->addRoute($route);
-        $this->cache = []; //clear cache
-        return $route;
+        $this->cache = [];
+        return $this->collection->createRoute($pattern, $resolver)->set('priority', $priority);
     }
 
     /**

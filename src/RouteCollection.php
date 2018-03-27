@@ -20,6 +20,9 @@ namespace Opis\View;
 use Opis\Pattern\Builder;
 use Opis\Routing\RouteCollection as BaseCollection;
 
+/**
+ * @method Route createRoute(string $pattern, callable $action, string $name = null)
+ */
 class RouteCollection extends BaseCollection
 {
     /**
@@ -27,7 +30,10 @@ class RouteCollection extends BaseCollection
      */
     public function __construct()
     {
-        parent::__construct(new Builder([
+        $factory = function (RouteCollection $collection, string $id, string $pattern, callable $action, string $name = null) {
+            return new Route($collection, $id, $pattern, $action, $name);
+        };
+        parent::__construct($factory, new Builder([
             Builder::SEGMENT_DELIMITER => '.',
             Builder::CAPTURE_MODE => (Builder::CAPTURE_LEFT | Builder::CAPTURE_TRAIL),
         ]), 'priority');
