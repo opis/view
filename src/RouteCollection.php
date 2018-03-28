@@ -30,18 +30,27 @@ class RouteCollection extends BaseCollection
      */
     public function __construct()
     {
-        $factory = function (
-            RouteCollection $collection,
-            string $id,
-            string $pattern,
-            callable $action,
-            string $name = null
-        ) {
-            return new Route($collection, $id, $pattern, $action, $name);
-        };
-        parent::__construct($factory, new Builder([
+        parent::__construct(static::class . '::factory', new Builder([
             Builder::SEGMENT_DELIMITER => '.',
             Builder::CAPTURE_MODE => (Builder::CAPTURE_LEFT | Builder::CAPTURE_TRAIL),
         ]), 'priority');
+    }
+
+    /**
+     * @param RouteCollection $collection
+     * @param string $id
+     * @param string $pattern
+     * @param callable $action
+     * @param string|null $name
+     * @return Route
+     */
+    protected static function factory(
+        RouteCollection $collection,
+        string $id,
+        string $pattern,
+        callable $action,
+        string $name = null
+    ): Route {
+        return new Route($collection, $id, $pattern, $action, $name);
     }
 }
