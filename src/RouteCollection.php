@@ -17,7 +17,7 @@
 
 namespace Opis\View;
 
-use Opis\Pattern\Builder;
+use Opis\Pattern\RegexBuilder;
 use Opis\Routing\RouteCollection as BaseCollection;
 
 /**
@@ -30,9 +30,9 @@ class RouteCollection extends BaseCollection
      */
     public function __construct()
     {
-        parent::__construct(static::class . '::factory', new Builder([
-            Builder::SEGMENT_DELIMITER => '.',
-            Builder::CAPTURE_MODE => (Builder::CAPTURE_LEFT | Builder::CAPTURE_TRAIL),
+        parent::__construct(static::class . '::factory', new RegexBuilder([
+            RegexBuilder::SEPARATOR_SYMBOL => '.',
+            RegexBuilder::CAPTURE_MODE => RegexBuilder::CAPTURE_LEFT,
         ]), 'priority');
     }
 
