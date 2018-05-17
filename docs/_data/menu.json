@@ -14,6 +14,11 @@
                     "description": "Basic stuff about views"
                 },
                 {
+                    "title": "View renderer",
+                    "url": "/5.x/view-renderer.html",
+                    "description": "Learn about view renderer"
+                },
+                {
                     "title": "Key concepts",
                     "url": "/5.x/key-concepts.html",
                     "description": "Crash course to Opis View"
