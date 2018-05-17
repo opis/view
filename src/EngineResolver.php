@@ -24,15 +24,15 @@ class EngineResolver implements Serializable
     /** @var EngineEntry[] */
     protected $engines = [];
 
-    /** @var  ViewApp */
-    protected $viewApp;
+    /** @var  ViewRenderer */
+    protected $renderer;
 
     /**
-     * @param ViewApp $viewApp
+     * @param ViewRenderer $renderer
      */
-    public function setViewApp(ViewApp $viewApp)
+    public function setRenderer(ViewRenderer $renderer)
     {
-        $this->viewApp = $viewApp;
+        $this->renderer = $renderer;
     }
 
     /**
@@ -65,10 +65,10 @@ class EngineResolver implements Serializable
     {
         foreach ($this->engines as $engine) {
             if ($engine->canHandle($path)) {
-                return $engine->instance($this->viewApp);
+                return $engine->instance($this->renderer);
             }
         }
-        return $this->viewApp->getDefaultEngine();
+        return $this->renderer->getDefaultEngine();
     }
 
 

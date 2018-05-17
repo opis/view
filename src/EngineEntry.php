@@ -82,15 +82,15 @@ class EngineEntry implements Serializable
     /**
      * Get an instance of an engine
      *
-     * @param ViewApp $viewApp
+     * @param ViewRenderer $renderer
      *
      * @return IEngine
      */
-    public function instance(ViewApp $viewApp): IEngine
+    public function instance(ViewRenderer $renderer): IEngine
     {
         if ($this->instance === null) {
             $factory = $this->factory;
-            return $this->instance = $factory($viewApp);
+            return $this->instance = $factory($renderer);
         }
 
         return $this->instance;

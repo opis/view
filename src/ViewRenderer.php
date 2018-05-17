@@ -25,7 +25,7 @@ use Opis\Routing\Router;
 use Opis\Closure\SerializableClosure;
 use Opis\Routing\FilterCollection;
 
-class ViewApp implements Serializable
+class ViewRenderer implements Serializable
 {
     /** @var array */
     protected $cache;
@@ -71,7 +71,7 @@ class ViewApp implements Serializable
             $engine = new PHPEngine();
         }
 
-        $resolver->setViewApp($this);
+        $resolver->setRenderer($this);
 
         $this->cache = [];
         $this->collection = $collection;

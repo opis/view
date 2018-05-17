@@ -17,122 +17,122 @@
 
 namespace Opis\View\Test;
 
-use Opis\View\ViewApp;
+use Opis\View\ViewRenderer;
 use Opis\View\IEngine;
 
 class ViewsTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var    \Opis\View\ViewApp */
-    protected $view;
+    /** @var    \Opis\View\ViewRenderer */
+    protected $renderer;
 
     public function setUp()
     {
-        $this->view = new ViewApp();
+        $this->renderer = new ViewRenderer();
     }
 
     public function testResolve()
     {
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'bar';
         });
 
-        $this->assertEquals('bar', $this->view->resolveViewName('foo'));
+        $this->assertEquals('bar', $this->renderer->resolveViewName('foo'));
     }
 
     public function testResolveMissing()
     {
-        $this->assertEquals(null, $this->view->resolveViewName('missing'));
+        $this->assertEquals(null, $this->renderer->resolveViewName('missing'));
     }
 
     public function testResolveMultiple()
     {
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'bar';
         });
 
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'baz';
         });
 
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'qux';
         });
 
-        $this->assertEquals('qux', $this->view->resolveViewName('foo'));
+        $this->assertEquals('qux', $this->renderer->resolveViewName('foo'));
     }
 
     public function testResolvePriority()
     {
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'bar';
         }, 1);
 
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'baz';
         });
 
-        $this->assertEquals('bar', $this->view->resolveViewName('foo'));
+        $this->assertEquals('bar', $this->renderer->resolveViewName('foo'));
     }
 
     public function testEngine()
     {
-        $this->view->getEngineResolver()->register(function () {
+        $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine1();
         })->handle(function ($path) {
             return true;
         });
 
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'bar';
         });
 
-        $this->assertEquals('BAR', $this->view->renderView('foo'));
+        $this->assertEquals('BAR', $this->renderer->renderView('foo'));
     }
 
     public function testEnginePriority1()
     {
-        $this->view->getEngineResolver()->register(function () {
+        $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine1();
         })->handle(function ($path) {
             return true;
         });
 
-        $this->view->getEngineResolver()->register(function () {
+        $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine2();
         })->handle(function ($path) {
             return true;
         });
 
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'bar';
         });
 
-        $this->assertEquals('BAR!', $this->view->renderView('foo'));
+        $this->assertEquals('BAR!', $this->renderer->renderView('foo'));
     }
 
     public function testEnginePriority2()
     {
-        $this->view->getEngineResolver()->register(function () {
+        $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine1();
         }, 1)->handle(function ($path) {
             return true;
         });
 
-        $this->view->getEngineResolver()->register(function () {
+        $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine2();
         })->handle(function ($path) {
             return true;
         });
 
-        $this->view->handle('foo', function () {
+        $this->renderer->handle('foo', function () {
             return 'bar';
         });
 
-        $this->assertEquals('BAR', $this->view->renderView('foo'));
+        $this->assertEquals('BAR', $this->renderer->renderView('foo'));
     }
 
     public function testRenderMethod1()
     {
-        $this->assertEquals('foo', $this->view->render('foo'));
+        $this->assertEquals('foo', $this->renderer->render('foo'));
     }
 }
