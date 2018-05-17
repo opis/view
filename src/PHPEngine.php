@@ -22,10 +22,10 @@ use Exception;
 class PHPEngine implements IEngine
 {
     /** @var    string */
-    protected $path;
+    private $path;
 
     /** @var    array */
-    protected $data;
+    private $data;
 
     /**
      * Build
