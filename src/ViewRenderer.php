@@ -179,20 +179,20 @@ class ViewRenderer implements Serializable
 
         $engine = $this->resolver->resolve($path);
 
-        return $engine->build($path, $view->viewArguments());
+        return $engine->build($path, $view->viewVars());
     }
 
     /**
      * Render a view
      *
      * @param   string $name
-     * @param   array $arguments
+     * @param   array $vars
      *
      * @return  mixed
      */
-    public function renderView(string $name, array $arguments = [])
+    public function renderView(string $name, array $vars = [])
     {
-        return $this->render(new View($name, $arguments));
+        return $this->render(new View($name, $vars));
     }
 
     /**

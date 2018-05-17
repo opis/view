@@ -27,9 +27,9 @@ interface IView
     public function viewName(): string;
 
     /**
-     * Returns view's arguments
+     * Returns view's variables
      *
      * @return  array
      */
-    public function viewArguments(): array;
+    public function viewVars(): array;
 }

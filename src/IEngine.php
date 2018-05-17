@@ -23,10 +23,10 @@ interface IEngine
      * Build content
      *
      * @param string $path
-     * @param array $data
+     * @param array $vars
      * @return string
      */
-    public function build(string $path, array $data = []): string;
+    public function build(string $path, array $vars = []): string;
 
     /**
      * Check if the engine can handle a given path

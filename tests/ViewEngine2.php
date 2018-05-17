@@ -29,7 +29,7 @@ class ViewEngine2 implements IEngine
     /**
      * @inheritdoc
      */
-    public function build(string $path, array $data = array()): string
+    public function build(string $path, array $vars = array()): string
     {
         return strtoupper($path) . '!';
     }

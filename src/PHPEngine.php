@@ -25,27 +25,27 @@ class PHPEngine implements IEngine
     private $path;
 
     /** @var    array */
-    private $data;
+    private $vars;
 
     /**
      * Build
      *
      * @param   string $path
-     * @param   array $data
+     * @param   array $vars
      *
      * @return  string
      * @throws Exception
      */
-    public function build(string $path, array $data = []): string
+    public function build(string $path, array $vars = []): string
     {
         $this->path = $path;
-        $this->data = $data;
+        $this->vars = $vars;
 
-        unset($path, $data);
+        unset($path, $vars);
 
         ob_start();
 
-        extract($this->data);
+        extract($this->vars);
 
         try {
             /** @noinspection PhpIncludeInspection */
@@ -55,7 +55,7 @@ class PHPEngine implements IEngine
             throw $e;
         }
 
-        $this->path = $this->data = null;
+        $this->path = $this->vars = null;
 
         return ob_get_clean();
     }

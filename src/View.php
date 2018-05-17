@@ -23,18 +23,18 @@ class View implements IView
     protected $name;
 
     /** @var    array */
-    protected $arguments;
+    protected $vars;
 
     /**
      * Constructor
      *
      * @param   string $name
-     * @param   array $arguments (optional)
+     * @param   array $vars (optional)
      */
-    public function __construct(string $name, array $arguments = [])
+    public function __construct(string $name, array $vars = [])
     {
         $this->name = $name;
-        $this->arguments = $arguments;
+        $this->vars = $vars;
     }
 
     /**
@@ -52,8 +52,8 @@ class View implements IView
      *
      * @return  array
      */
-    public function viewArguments(): array
+    public function viewVars(): array
     {
-        return $this->arguments;
+        return $this->vars;
     }
 }
