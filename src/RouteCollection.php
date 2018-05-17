@@ -50,7 +50,8 @@ class RouteCollection extends BaseCollection
         string $pattern,
         callable $action,
         string $name = null
-    ): Route {
+    ): Route
+    {
         return new Route($collection, $id, $pattern, $action, $name);
     }
 }

@@ -56,7 +56,8 @@ class ViewRenderer implements Serializable
     public function __construct(
         RouteCollection $collection = null,
         IEngine $engine = null
-    ) {
+    )
+    {
         if ($collection === null) {
             $collection = new RouteCollection();
         }

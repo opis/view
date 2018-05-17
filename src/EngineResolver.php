@@ -85,7 +85,7 @@ class EngineResolver implements Serializable
         }
 
         foreach ($this->cache as $engine) {
-            if ($engine->canHandle($path)){
+            if ($engine->canHandle($path)) {
                 return $engine;
             }
         }
