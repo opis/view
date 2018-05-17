@@ -59,4 +59,12 @@ class PHPEngine implements IEngine
 
         return ob_get_clean();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function canHandle(string $path): bool
+    {
+        return preg_match('/.*\.php$/', $path);
+    }
 }
