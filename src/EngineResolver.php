@@ -28,6 +28,15 @@ class EngineResolver implements Serializable
     protected $renderer;
 
     /**
+     * Constructor
+     * @param ViewRenderer $renderer
+     */
+    public function __construct(ViewRenderer $renderer)
+    {
+        $this->renderer = $renderer;
+    }
+
+    /**
      * @param ViewRenderer $renderer
      */
     public function setRenderer(ViewRenderer $renderer)
