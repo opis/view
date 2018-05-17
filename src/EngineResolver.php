@@ -21,7 +21,7 @@ use Serializable;
 
 class EngineResolver implements Serializable
 {
-    /** @var EngineEntry[] */
+    /** @var array */
     protected $engines = [];
 
     /** @var  ViewRenderer */
