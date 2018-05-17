@@ -51,31 +51,22 @@ class ViewRenderer implements Serializable
     /**
      * ViewApp constructor.
      * @param RouteCollection|null $collection
-     * @param EngineResolver|null $resolver
      * @param IEngine|null $engine
      */
     public function __construct(
         RouteCollection $collection = null,
-        EngineResolver $resolver = null,
         IEngine $engine = null
     ) {
         if ($collection === null) {
             $collection = new RouteCollection();
         }
 
-        if ($resolver === null) {
-            $resolver = new EngineResolver();
-        }
-
         if ($engine === null) {
             $engine = new PHPEngine();
         }
 
-        $resolver->setRenderer($this);
-
         $this->cache = [];
         $this->collection = $collection;
-        $this->resolver = $resolver;
         $this->defaultEngine = $engine;
     }
 
@@ -138,6 +129,9 @@ class ViewRenderer implements Serializable
      */
     public function getEngineResolver(): EngineResolver
     {
+        if ($this->resolver === null) {
+            $this->resolver = new EngineResolver($this);
+        }
         return $this->resolver;
     }
 
