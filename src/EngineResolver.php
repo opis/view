@@ -18,6 +18,7 @@
 namespace Opis\View;
 
 use Serializable;
+use Opis\Closure\SerializableClosure;
 
 class EngineResolver implements Serializable
 {
@@ -100,7 +101,24 @@ class EngineResolver implements Serializable
      */
     public function serialize()
     {
-        return serialize($this->engines);
+        SerializableClosure::enterContext();
+
+        $engines = $this->engines;
+
+        foreach ($engines as &$engine) {
+            if ($engine[0] instanceof \Closure) {
+                $engine[0] = SerializableClosure::from($engine[0]);
+            }
+        }
+
+        $object = serialize([
+            'engines' => $engines,
+            'resolver' => $this->renderer
+        ]);
+
+        SerializableClosure::exitContext();
+
+        return $object;
     }
 
     /**
@@ -110,6 +128,15 @@ class EngineResolver implements Serializable
      */
     public function unserialize($data)
     {
-        $this->engines = unserialize($data);
+        $object = unserialize($data);
+
+        foreach ($object['engines'] as &$engine) {
+            if ($engine[0] instanceof SerializableClosure) {
+                $engine[0] = $engine[0]->getClosure();
+            }
+        }
+
+        $this->engines = $object['engines'];
+        $this->renderer = $object['renderer'];
     }
 }
