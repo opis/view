@@ -27,4 +27,12 @@ interface IEngine
      * @return string
      */
     public function build(string $path, array $data = []): string;
+
+    /**
+     * Check if the engine can handle a given path
+     *
+     * @param string $path
+     * @return bool
+     */
+    public function canHandle(string $path): bool;
 }
