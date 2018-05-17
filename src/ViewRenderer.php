@@ -66,6 +66,7 @@ class ViewRenderer implements Serializable
         }
 
         $this->cache = [];
+        $this->resolver = new EngineResolver($this);
         $this->collection = $collection;
         $this->defaultEngine = $engine;
     }
@@ -129,9 +130,6 @@ class ViewRenderer implements Serializable
      */
     public function getEngineResolver(): EngineResolver
     {
-        if ($this->resolver === null) {
-            $this->resolver = new EngineResolver($this);
-        }
         return $this->resolver;
     }
 
