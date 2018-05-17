@@ -1,0 +1,20 @@
+{
+    "5.x": [
+        {
+            "title": "Opis View",
+            "pages": [
+                {
+                    "title": "About",
+                    "url": "/5.x/",
+                    "description": "About this library"
+                },
+                {
+                    "title": "Quick start",
+                    "url": "/5.x/quick-start.html",
+                    "description": "Crash course to Opis View"
+                }
+            ]
+        }
+    ]
+}
+
