@@ -78,8 +78,6 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
     {
         $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine1();
-        })->handle(function ($path) {
-            return true;
         });
 
         $this->renderer->handle('foo', function () {
@@ -93,14 +91,10 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
     {
         $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine1();
-        })->handle(function ($path) {
-            return true;
         });
 
         $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine2();
-        })->handle(function ($path) {
-            return true;
         });
 
         $this->renderer->handle('foo', function () {
@@ -114,14 +108,10 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
     {
         $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine1();
-        }, 1)->handle(function ($path) {
-            return true;
-        });
+        }, 1);
 
         $this->renderer->getEngineResolver()->register(function () {
             return new ViewEngine2();
-        })->handle(function ($path) {
-            return true;
         });
 
         $this->renderer->handle('foo', function () {

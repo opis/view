@@ -26,8 +26,19 @@ class ViewEngine2 implements IEngine
         return [];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function build(string $path, array $data = array()): string
     {
         return strtoupper($path) . '!';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function canHandle(string $path): bool
+    {
+        return true;
     }
 }
