@@ -9,8 +9,13 @@
                     "description": "About this library"
                 },
                 {
-                    "title": "Quick start",
-                    "url": "/5.x/quick-start.html",
+                    "title": "Views",
+                    "url": "/5.x/views.html",
+                    "description": "Basic stuff about views"
+                },
+                {
+                    "title": "Key concepts",
+                    "url": "/5.x/key-concepts.html",
                     "description": "Crash course to Opis View"
                 }
             ]
