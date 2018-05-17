@@ -15,8 +15,10 @@
  * limitations under the License.
  * ============================================================================ */
 
+namespace Opis\View\Test;
+
 use Opis\View\ViewApp;
-use Opis\View\EngineInterface;
+use Opis\View\IEngine;
 
 class ViewsTest extends \PHPUnit\Framework\TestCase
 {
@@ -75,7 +77,7 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
     public function testEngine()
     {
         $this->view->getEngineResolver()->register(function () {
-            return new Engine1();
+            return new ViewEngine1();
         })->handle(function ($path) {
             return true;
         });
@@ -90,13 +92,13 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
     public function testEnginePriority1()
     {
         $this->view->getEngineResolver()->register(function () {
-            return new Engine1();
+            return new ViewEngine1();
         })->handle(function ($path) {
             return true;
         });
 
         $this->view->getEngineResolver()->register(function () {
-            return new Engine2();
+            return new ViewEngine2();
         })->handle(function ($path) {
             return true;
         });
@@ -111,13 +113,13 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
     public function testEnginePriority2()
     {
         $this->view->getEngineResolver()->register(function () {
-            return new Engine1();
+            return new ViewEngine1();
         }, 1)->handle(function ($path) {
             return true;
         });
 
         $this->view->getEngineResolver()->register(function () {
-            return new Engine2();
+            return new ViewEngine2();
         })->handle(function ($path) {
             return true;
         });
@@ -132,31 +134,5 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
     public function testRenderMethod1()
     {
         $this->assertEquals('foo', $this->view->render('foo'));
-    }
-}
-
-class Engine1 implements EngineInterface
-{
-    public function defaultValues($viewItem): array
-    {
-        return [];
-    }
-
-    public function build(string $path, array $data = array()): string
-    {
-        return strtoupper($path);
-    }
-}
-
-class Engine2 implements EngineInterface
-{
-    public function defaultValues($viewItem): array
-    {
-        return [];
-    }
-
-    public function build(string $path, array $data = array()): string
-    {
-        return strtoupper($path) . '!';
     }
 }
