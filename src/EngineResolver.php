@@ -27,6 +27,9 @@ class EngineResolver implements Serializable
     /** @var  ViewRenderer */
     protected $renderer;
 
+    /** @var IEngine[]|null */
+    protected $cache;
+
     /**
      * Constructor
      * @param ViewRenderer $renderer
@@ -41,18 +44,27 @@ class EngineResolver implements Serializable
      *
      * @param callable $factory
      * @param int $priority
-     * @return EngineEntry
+     * @return EngineResolver
      */
-    public function register(callable $factory, $priority = 0): EngineEntry
+    public function register(callable $factory, $priority = 0): self
     {
-        $entry = new EngineEntry($factory, $priority);
-        $this->engines[] = $entry;
+        array_unshift($this->engines, [$factory, $priority]);
+        $this->cache = null;
 
-        uasort($this->engines, function (EngineEntry $a, EngineEntry $b) {
-            return $a->getPriority() <= $b->getPriority() ? 1 : -1;
-        });
+        $sorted = false;
+        while (!$sorted) {
+            $sorted = true;
+            for ($i = 0, $l = count($this->engines) - 1; $i < $l; $i++) {
+                if ($this->engines[$i][1] < $this->engines[$i + 1][1]) {
+                    $tmp = $this->engines[$i];
+                    $this->engines[$i] = $this->engines[$i + 1];
+                    $this->engines[$i + 1] = $tmp;
+                    $sorted = false;
+                }
+            }
+        }
 
-        return $entry;
+        return $this;
     }
 
     /**
@@ -64,11 +76,19 @@ class EngineResolver implements Serializable
      */
     public function resolve(string $path): IEngine
     {
-        foreach ($this->engines as $engine) {
-            if ($engine->canHandle($path)) {
-                return $engine->instance($this->renderer);
+        if ($this->cache === null) {
+            $this->cache = [];
+            foreach ($this->engines as $engine) {
+                $this->cache[] = $engine[0]($this->renderer);
             }
         }
+
+        foreach ($this->cache as $engine) {
+            if ($engine->canHandle($path)){
+                return $engine;
+            }
+        }
+
         return $this->renderer->getDefaultEngine();
     }
 
