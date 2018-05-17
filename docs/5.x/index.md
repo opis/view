@@ -8,7 +8,8 @@ lib:
 ---
 # About
 
-**Opis View** description here.
+**Opis View** is a rendering engine that can be integrated with multiple template
+engines and is capable of using those template engines simultaneously.
 
 ## License
 **Opis View** is licensed under the [Apache License, Version 2.0][apache_license].
