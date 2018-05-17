@@ -37,14 +37,6 @@ class EngineResolver implements Serializable
     }
 
     /**
-     * @param ViewRenderer $renderer
-     */
-    public function setRenderer(ViewRenderer $renderer)
-    {
-        $this->renderer = $renderer;
-    }
-
-    /**
      * Register a new view engine
      *
      * @param callable $factory
