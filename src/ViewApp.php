@@ -68,7 +68,7 @@ class ViewApp implements Serializable
         }
 
         if ($engine === null) {
-            $engine = new PHPIEngine();
+            $engine = new PHPEngine();
         }
 
         $resolver->setViewApp($this);

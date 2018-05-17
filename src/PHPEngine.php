@@ -19,7 +19,7 @@ namespace Opis\View;
 
 use Exception;
 
-class PHPIEngine implements IEngine
+class PHPEngine implements IEngine
 {
     /** @var    string */
     protected $path;
