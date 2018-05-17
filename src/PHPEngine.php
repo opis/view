@@ -65,6 +65,6 @@ class PHPEngine implements IEngine
      */
     public function canHandle(string $path): bool
     {
-        return preg_match('/.*\.php$/', $path);
+        return true;
     }
 }
