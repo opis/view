@@ -28,7 +28,7 @@ class EngineEntry implements Serializable
     /** @var  callable */
     protected $handler;
 
-    /** @var  EngineInterface */
+    /** @var  IEngine */
     protected $instance;
 
     /** @var  int */
@@ -84,9 +84,9 @@ class EngineEntry implements Serializable
      *
      * @param ViewApp $viewApp
      *
-     * @return EngineInterface
+     * @return IEngine
      */
-    public function instance(ViewApp $viewApp): EngineInterface
+    public function instance(ViewApp $viewApp): IEngine
     {
         if ($this->instance === null) {
             $factory = $this->factory;

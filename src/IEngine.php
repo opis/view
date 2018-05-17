@@ -17,7 +17,7 @@
 
 namespace Opis\View;
 
-interface EngineInterface
+interface IEngine
 {
     /**
      * Build content

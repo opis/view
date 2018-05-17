@@ -59,9 +59,9 @@ class EngineResolver implements Serializable
      *
      * @param   string $path
      *
-     * @return  EngineInterface
+     * @return  IEngine
      */
-    public function resolve(string $path): EngineInterface
+    public function resolve(string $path): IEngine
     {
         foreach ($this->engines as $engine) {
             if ($engine->canHandle($path)) {
