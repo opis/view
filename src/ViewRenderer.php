@@ -179,7 +179,7 @@ class ViewRenderer implements Serializable
 
         $engine = $this->resolver->resolve($path);
 
-        return $engine->build($path, $view->viewVars());
+        return $engine->build($path, $view->viewVariables());
     }
 
     /**

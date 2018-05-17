@@ -52,7 +52,7 @@ class View implements IView
      *
      * @return  array
      */
-    public function viewVars(): array
+    public function viewVariables(): array
     {
         return $this->vars;
     }

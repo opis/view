@@ -31,5 +31,5 @@ interface IView
      *
      * @return  array
      */
-    public function viewVars(): array;
+    public function viewVariables(): array;
 }
