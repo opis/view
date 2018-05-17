@@ -12,7 +12,7 @@ title: Views
 ## Introduction
 
 A *view* is nothing more but an instance of a class that implements the `Opis\View\IView` interface.
-The interface has two methods: `viewName` and `viewVars`. The first method must return the
+The interface has two methods: `viewName` and `viewVariables`. The first method must return the
 name of the view, while the other one must return a mapped array of values, representing the view's variables.
 
 The default implementation of a *view* is provided by the library itself, through its `Opis\View\View` class. 
@@ -52,7 +52,7 @@ $view = new View('test', [
     'bar' => 'Bar'
 ]);
 
-print_r($views->viewVars());
+print_r($view->viewVariables());
 
 /*
 Array
