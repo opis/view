@@ -12,7 +12,7 @@ title: View renderer
 The view renderer is the central part of the rendering system, and it's
 represented by an instance of the `Opis\View\ViewRenderer` class. 
 Let's assume we have the following template for a blog article and we want
-to associate it a view named `blog.article`.
+to associate it with a view named `blog.article`.
 
 **article.php**
 
