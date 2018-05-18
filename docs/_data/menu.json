@@ -7,7 +7,12 @@
                     "title": "About",
                     "url": "/5.x/",
                     "description": "About this library"
-                },
+                }
+            ]
+        },
+        {
+            "title": "Key concepts",
+            "pages": [
                 {
                     "title": "Views",
                     "url": "/5.x/views.html",
@@ -19,9 +24,9 @@
                     "description": "Learn about view renderer"
                 },
                 {
-                    "title": "Key concepts",
-                    "url": "/5.x/key-concepts.html",
-                    "description": "Crash course to Opis View"
+                    "title": "Template engines",
+                    "url": "/5.x/template-engines.html",
+                    "description": "Presentation of template engines"
                 }
             ]
         }

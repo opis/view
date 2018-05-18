@@ -20,13 +20,14 @@ engines and is capable of using those template engines simultaneously.
 
 ## Installation
 
-**Opis View** is available on [Packagist] and can be installed from a terminal by using [Composer]. 
+**Opis View** is available on [Packagist] and it can be installed from a 
+command line interface by using [Composer]. 
 
 ```bash
 composer require {{page.lib.name}}
 ```
 
-Or you can directly add it into your `composer.json` file as a dependency
+Or you could directly reference it into your `composer.json` file as a dependency
 
 ```json
 {

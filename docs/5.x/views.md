@@ -6,8 +6,8 @@ title: Views
 # Views
 
 1. [Introduction](#introduction)
-2. [View's name](#views-name)
-3. [View's variables](#views-variables)
+2. [View name](#view-name)
+3. [View variables](#view-variables)
 
 ## Introduction
 
@@ -28,9 +28,9 @@ $bar = new View('bar', [
 ]);
 ```
 
-## View's name
+## View name
 
-The view's name is an opaque identifier for a view instance. This means that it has 
+The view name is an opaque identifier for a view instance. This means that it has 
 absolutely no connection with the name of the template file, nor with its location.
 It's not the view's job to know where to get its template from.
 
@@ -41,7 +41,22 @@ $view = new View('foo');
 echo $view->viewName(); //> foo
 ```
 
-## View's variables
+The view name's value can be split into segments by using the `.` dot symbol.
+
+```php
+$view = new View('user.profile');
+``` 
+
+Splitting a view name into segments is useful, not only when it comes to resolve them
+to a location, but also to avoid naming conflicts between different vendors.
+
+```php
+$view1 = new View('opis.user.profile');
+$view2 = new View('vendor.user.profile');
+$view3 = new View('acme.blog.article');
+``` 
+
+## View variables
 
 Variables are represented by a key-value mapped array, where the key represents
 the variable's name and the value represent's the variable's value.
