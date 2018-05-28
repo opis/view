@@ -2,12 +2,16 @@ Opis View
 =========
 [![Build Status](https://travis-ci.org/opis/view.svg?branch=master)](https://travis-ci.org/opis/view)
 [![Latest Stable Version](https://poser.pugx.org/opis/view/version.png)](https://packagist.org/packages/opis/view)
-[![Latest Unstable Version](https://poser.pugx.org/opis/view/v/unstable.png)](//packagist.org/packages/opis/view)
+[![Latest Unstable Version](https://poser.pugx.org/opis/view/v/unstable.png)](https://packagist.org/packages/opis/view)
 [![License](https://poser.pugx.org/opis/view/license.png)](https://packagist.org/packages/opis/view)
 
 Rendering engine
 --------------
 **Opis View** is a rendering engine based on the **Opis Routing** library that can be integrated with multiple template engines simultaneously.
+
+### Documentation
+
+Documentation and examples can be found [here](https://www.opis.io/view).
 
 ### License
 
@@ -39,7 +43,3 @@ archive file, extract the content of the archive and include de `autoload.php` f
 require_once 'path/to/view-master/autoload.php';
 
 ```
-
-### Documentation
-
-Examples and documentation can be found [here](http://opis.io/view).
