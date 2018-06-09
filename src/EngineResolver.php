@@ -113,7 +113,7 @@ class EngineResolver implements Serializable
 
         $object = serialize([
             'engines' => $engines,
-            'resolver' => $this->renderer
+            'renderer' => $this->renderer
         ]);
 
         SerializableClosure::exitContext();
