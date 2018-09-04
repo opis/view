@@ -7,39 +7,43 @@ Opis View
 
 Rendering engine
 --------------
-**Opis View** is a rendering engine based on the **Opis Routing** library that can be integrated with multiple template engines simultaneously.
+**Opis View** is an innovating rendering system 
+that can be integrated with multiple template engines simultaneously.
 
 ### Documentation
 
-Documentation and examples can be found [here](https://www.opis.io/view).
+The full documentation for this library can be found [here][documentation].
 
 ### License
 
-**Opis View** is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). 
+**Opis View** is licensed under the [Apache License, Version 2.0][apache_license].
 
 ### Requirements
 
-* PHP 7.0.* or higher
-* [Opis Routing](http://www.opis.io/routing) 5.0.x-dev
+* PHP ^7.0
+* [Opis Routing] ^5.0
 
-### Installation
+## Installation
 
-This library is available on [Packagist](https://packagist.org/packages/opis/view) and can be installed using [Composer](http://getcomposer.org).
+**Opis View** is available on [Packagist] and it can be installed from a 
+command line interface by using [Composer]. 
+
+```bash
+composer require opis/view
+```
+
+Or you could directly reference it into your `composer.json` file as a dependency
 
 ```json
 {
     "require": {
-        "opis/view": "5.0.x-dev"
+        "opis/view": "^5.0"
     }
 }
 ```
 
-If you are unable to use [Composer](http://getcomposer.org) you can download the
-[tar.gz](https://github.com/opis/view/archive/master.tar.gz) or the [zip](https://github.com/opis/view/archive/master.zip)
-archive file, extract the content of the archive and include de `autoload.php` file into your project. 
-
-```php
-
-require_once 'path/to/view-master/autoload.php';
-
-```
+[documentation]: https://opis.io/view
+[apache_license]: https://www.apache.org/licenses/LICENSE-2.0 "Apache License"
+[Packagist]: https://packagist.org/packages/opis/view "Packagist"
+[Composer]: https://getcomposer.org "Composer"
+[Opis Routing]: https://opis.io/routing "Opis Routing"

@@ -1,18 +1,22 @@
 {
     "name": "opis/view",
-    "description": "A rendering engine that can be integrated with multiple template engines simultaneously",
+    "description": "An innovating rendering system",
     "keywords": ["view", "template", "renderer", "serializable", "engine"],
-    "homepage": "http://opis.io/view",
+    "homepage": "https://opis.io/view",
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "Marius Sarca",
             "email": "marius.sarca@gmail.com"
+        },
+        {
+            "name": "Sorin Sarca",
+            "email": "sarca_sorin@hotmail.com"
         }
     ],
     "require": {
         "php": ">=7.0.0",
-        "opis/routing": "5.0.x-dev"
+        "opis/routing": "^5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"

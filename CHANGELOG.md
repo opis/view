@@ -2,22 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## v5.0.x-dev
+## v5.0.0 - 2018.09.04
 ### Added
 - Support for PHP 7.0.x
-- `Opis\View\EngineEntry::getPriority` method
 
 ### Removed
 - Support for PHP 5.x
 
 ### Changed
-- `Opis\View\EngineEntry` class was moved into its own file
-- `Opis\View\ViewRouter` was renamed to `Opis\View\ViewApp`
-- Source files were moved from `lib` to `src`
-- `Opis\View\ViewableInterface` was renamed to `Opis\View\IView`
-
-### Fixed
-- Nothing
+- Library was fully refactored
 
 ## v4.1.2 - 2016.03.20
 ### Added
