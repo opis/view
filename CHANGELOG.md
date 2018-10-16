@@ -2,9 +2,9 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## v5.0.0 - 2018.09.04
+## v5.0.0 - 2018.10.16
 ### Added
-- Support for PHP 7.0.x
+- Support for PHP 7.x
 
 ### Removed
 - Support for PHP 5.x
