@@ -162,7 +162,7 @@ class ViewRenderer implements Serializable
     /**
      * Render a view
      *
-     * @param   IView|mixed $view
+     * @param   IView|string|mixed $view
      *
      * @return  string
      */
@@ -203,7 +203,7 @@ class ViewRenderer implements Serializable
      *
      * @return  string|null
      */
-    public function resolveViewName(string $name)
+    public function resolveViewName(string $name): ?string
     {
         if (!array_key_exists($name, $this->cache)) {
             $this->collection->sort();
