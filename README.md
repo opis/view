@@ -20,7 +20,7 @@ The full documentation for this library can be found [here][documentation].
 
 ### Requirements
 
-* PHP ^7.0
+* PHP ^7.1
 * [Opis Routing] ^5.0
 
 ## Installation
