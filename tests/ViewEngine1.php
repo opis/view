@@ -17,9 +17,9 @@
 
 namespace Opis\View\Test;
 
-use Opis\View\IEngine;
+use Opis\View\Engine;
 
-class ViewEngine1 implements IEngine
+class ViewEngine1 implements Engine
 {
     public function defaultValues($viewItem): array
     {

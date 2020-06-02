@@ -10,18 +10,18 @@ Rendering engine
 **Opis View** is an innovating rendering system 
 that can be integrated with multiple template engines simultaneously.
 
-### Documentation
+## Documentation
 
 The full documentation for this library can be found [here][documentation].
 
-### License
+## License
 
 **Opis View** is licensed under the [Apache License, Version 2.0][apache_license].
 
-### Requirements
+## Requirements
 
-* PHP ^7.1
-* [Opis Routing] ^5.0
+* PHP ^7.4
+* [Opis Utils] ^2020
 
 ## Installation
 
@@ -37,7 +37,7 @@ Or you could directly reference it into your `composer.json` file as a dependenc
 ```json
 {
     "require": {
-        "opis/view": "^5.0"
+        "opis/view": "^2020"
     }
 }
 ```
@@ -46,4 +46,4 @@ Or you could directly reference it into your `composer.json` file as a dependenc
 [apache_license]: https://www.apache.org/licenses/LICENSE-2.0 "Apache License"
 [Packagist]: https://packagist.org/packages/opis/view "Packagist"
 [Composer]: https://getcomposer.org "Composer"
-[Opis Routing]: https://opis.io/routing "Opis Routing"
+[Opis Utils]: https://github.com/opis/utils "Opis Utils"

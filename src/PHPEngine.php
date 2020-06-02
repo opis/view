@@ -19,14 +19,8 @@ namespace Opis\View;
 
 use Exception;
 
-class PHPEngine implements IEngine
+class PHPEngine implements Engine
 {
-    /** @var    string */
-    private $path;
-
-    /** @var    array */
-    private $vars;
-
     /**
      * Build
      *
@@ -38,24 +32,22 @@ class PHPEngine implements IEngine
      */
     public function build(string $path, array $vars = []): string
     {
-        $this->path = $path;
-        $this->vars = $vars;
+        ${'#path'} = $path;
+        ${'#vars'} = $vars;
 
         unset($path, $vars);
 
         ob_start();
 
-        extract($this->vars);
+        extract(${'#vars'});
 
         try {
             /** @noinspection PhpIncludeInspection */
-            include $this->path;
+            include ${'#path'};
         } catch (Exception $e) {
             ob_get_clean();
             throw $e;
         }
-
-        $this->path = $this->vars = null;
 
         return ob_get_clean();
     }

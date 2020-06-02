@@ -17,19 +17,43 @@
 
 namespace Opis\View;
 
-interface IView
+class DefaultView implements View
 {
+    /** @var    string */
+    protected $name;
+
+    /** @var    array */
+    protected $vars;
+
     /**
-     * Returns view's name
+     * Constructor
+     *
+     * @param   string $name
+     * @param   array $vars (optional)
+     */
+    public function __construct(string $name, array $vars = [])
+    {
+        $this->name = $name;
+        $this->vars = $vars;
+    }
+
+    /**
+     * Return view's name
      *
      * @return  string
      */
-    public function viewName(): string;
+    public function getViewName(): string
+    {
+        return $this->name;
+    }
 
     /**
-     * Returns view's variables
+     * Return view's arguments
      *
      * @return  array
      */
-    public function viewVariables(): array;
+    public function getViewVariables(): array
+    {
+        return $this->vars;
+    }
 }

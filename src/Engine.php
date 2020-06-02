@@ -17,26 +17,22 @@
 
 namespace Opis\View;
 
-use Opis\Routing\{
-    IFilter, Route as BaseRoute, Router
-};
-
-class UserFilter implements IFilter
+interface Engine
 {
     /**
-     * @inheritdoc
+     * Build content
+     *
+     * @param string $path
+     * @param array $vars
+     * @return string
      */
-    public function filter(Router $router, BaseRoute $route): bool
-    {
-        $filter = $route->get('filter');
+    public function build(string $path, array $vars = []): string;
 
-        if (!is_callable($filter)) {
-            return true;
-        }
-
-        $invoker = $router->resolveInvoker($route);
-        $arguments = $invoker->getArgumentResolver()->resolve($filter);
-
-        return $filter(...$arguments);
-    }
+    /**
+     * Check if the engine can handle a given path
+     *
+     * @param string $path
+     * @return bool
+     */
+    public function canHandle(string $path): bool;
 }

@@ -17,17 +17,19 @@
 
 namespace Opis\View\Test;
 
-use Opis\View\ViewRenderer;
-use Opis\View\IEngine;
+use Opis\View\Renderer;
+use Opis\View\Engine;
+use PHPUnit\Framework\TestCase;
+use function Opis\Closure\init as enableSerialization;
 
-class ViewsTest extends \PHPUnit\Framework\TestCase
+class ViewsTest extends TestCase
 {
-    /** @var    \Opis\View\ViewRenderer */
+    /** @var Renderer  */
     protected $renderer;
 
     public function setUp()
     {
-        $this->renderer = new ViewRenderer();
+        $this->renderer = new Renderer();
     }
 
     public function testResolve()
@@ -124,5 +126,26 @@ class ViewsTest extends \PHPUnit\Framework\TestCase
     public function testRenderMethod1()
     {
         $this->assertEquals('foo', $this->renderer->render('foo'));
+    }
+
+    public function testSerialization()
+    {
+        enableSerialization();
+
+        $this->renderer->getEngineResolver()->register(function () {
+            return new ViewEngine1();
+        }, 1);
+
+        $this->renderer->getEngineResolver()->register(function () {
+            return new ViewEngine2();
+        });
+
+        $this->renderer->handle('foo', function () {
+            return 'bar';
+        });
+
+        $renderer = unserialize(serialize($this->renderer));
+
+        $this->assertEquals('BAR', $this->renderer->renderView('foo'));
     }
 }

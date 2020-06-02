@@ -17,25 +17,21 @@
 
 namespace Opis\View;
 
-use Serializable;
-use Opis\Closure\SerializableClosure;
+use Opis\Utils\SortableList;
 
-class EngineResolver implements Serializable
+class EngineResolver extends SortableList
 {
-    /** @var array */
-    protected $engines = [];
+    /** @var  Renderer */
+    private $renderer;
 
-    /** @var  ViewRenderer */
-    protected $renderer;
-
-    /** @var IEngine[]|null */
-    protected $cache;
+    /** @var Engine[]|null */
+    private ?array $cache = null;
 
     /**
      * Constructor
-     * @param ViewRenderer $renderer
+     * @param Renderer $renderer
      */
-    public function __construct(ViewRenderer $renderer)
+    public function __construct(Renderer $renderer)
     {
         $this->renderer = $renderer;
     }
@@ -47,24 +43,10 @@ class EngineResolver implements Serializable
      * @param int $priority
      * @return EngineResolver
      */
-    public function register(callable $factory, $priority = 0): self
+    public function register(callable $factory, int $priority = 0): self
     {
-        array_unshift($this->engines, [$factory, $priority]);
         $this->cache = null;
-
-        $sorted = false;
-        while (!$sorted) {
-            $sorted = true;
-            for ($i = 0, $l = count($this->engines) - 1; $i < $l; $i++) {
-                if ($this->engines[$i][1] < $this->engines[$i + 1][1]) {
-                    $tmp = $this->engines[$i];
-                    $this->engines[$i] = $this->engines[$i + 1];
-                    $this->engines[$i + 1] = $tmp;
-                    $sorted = false;
-                }
-            }
-        }
-
+        $this->addItem($factory, $priority);
         return $this;
     }
 
@@ -73,14 +55,17 @@ class EngineResolver implements Serializable
      *
      * @param   string $path
      *
-     * @return  IEngine
+     * @return  Engine
      */
-    public function resolve(string $path): IEngine
+    public function resolve(string $path): Engine
     {
         if ($this->cache === null) {
             $this->cache = [];
-            foreach ($this->engines as $engine) {
-                $this->cache[] = $engine[0]($this->renderer);
+            foreach ($this->getValues() as $factory) {
+                $instance = $factory($this->renderer);
+                if ($instance instanceof Engine) {
+                    $this->cache[] = $instance;
+                }
             }
         }
 
@@ -93,50 +78,17 @@ class EngineResolver implements Serializable
         return $this->renderer->getDefaultEngine();
     }
 
-
-    /**
-     * Serialize
-     *
-     * @return  string
-     */
-    public function serialize()
+    public function __serialize(): array
     {
-        SerializableClosure::enterContext();
-
-        $engines = $this->engines;
-
-        foreach ($engines as &$engine) {
-            if ($engine[0] instanceof \Closure) {
-                $engine[0] = SerializableClosure::from($engine[0]);
-            }
-        }
-
-        $object = serialize([
-            'engines' => $engines,
-            'renderer' => $this->renderer
-        ]);
-
-        SerializableClosure::exitContext();
-
-        return $object;
+        return [
+            'renderer' => $this->renderer,
+            'parent' => parent::__serialize(),
+        ];
     }
 
-    /**
-     * Unserialize
-     *
-     * @param   string $data
-     */
-    public function unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $object = unserialize($data);
-
-        foreach ($object['engines'] as &$engine) {
-            if ($engine[0] instanceof SerializableClosure) {
-                $engine[0] = $engine[0]->getClosure();
-            }
-        }
-
-        $this->engines = $object['engines'];
-        $this->renderer = $object['renderer'];
+        $this->renderer = $data['renderer'];
+        parent::__unserialize($data['parent']);
     }
 }

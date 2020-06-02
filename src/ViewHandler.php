@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2018 Zindex Software
+ * Copyright 2020 Zindex Software
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,16 @@
 
 namespace Opis\View;
 
-use Opis\Routing\Route as BaseRoute;
-
-class Route extends BaseRoute
+interface ViewHandler
 {
+    public function filter(callable $callback): self;
+
+    public function where(string $name, string $regex): self;
+
     /**
-     * @param callable $filter
-     * @return Route
+     * @param string $name
+     * @param string[] $values
+     * @return $this
      */
-    public function filter(callable $filter): self
-    {
-        $this->set('filter', $filter);
-        return $this;
-    }
+    public function whereIn(string $name, array $values): self;
 }
