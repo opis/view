@@ -158,7 +158,8 @@ class Renderer extends SortableList
         /** @var DefaultViewHandler $handler */
         foreach ($this->getValues() as $handler) {
             if (preg_match($handler->getRegex(), $name)) {
-                $resolver = new ArgumentResolver(null, $this->regexBuilder->getValues($handler->getRegex(), $name));
+                $resolver = new ArgumentResolver();
+                $resolver->addValues($this->regexBuilder->getValues($handler->getRegex(), $name));
                 if (null !== $filter = $handler->getFilter()) {
                     $arguments = $resolver->resolve($filter);
                     if (!(bool)$filter(...$arguments)) {
@@ -172,10 +173,5 @@ class Renderer extends SortableList
         }
 
         return null;
-    }
-
-    private function getArgumentResolver(DefaultViewHandler $handler, string $view): ArgumentResolver
-    {
-
     }
 }

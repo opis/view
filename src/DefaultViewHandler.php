@@ -31,7 +31,6 @@ class DefaultViewHandler implements ViewHandler
     private Renderer $renderer;
     private array $placeholders = [];
     private ?string $regex = null;
-    private ?ViewInvoker $invoker = null;
 
     public function __construct(Renderer $renderer, string $pattern, callable $callback)
     {
