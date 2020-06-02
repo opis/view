@@ -1,6 +1,6 @@
 Opis View
 =========
-[![Build Status](https://travis-ci.org/opis/view.svg?branch=master)](https://travis-ci.org/opis/view)
+[![Tests](https://github.com/opis/view/workflows/Tests/badge.svg)](https://github.com/opis/view/actions)
 [![Latest Stable Version](https://poser.pugx.org/opis/view/version.png)](https://packagist.org/packages/opis/view)
 [![Latest Unstable Version](https://poser.pugx.org/opis/view/v/unstable.png)](https://packagist.org/packages/opis/view)
 [![License](https://poser.pugx.org/opis/view/license.png)](https://packagist.org/packages/opis/view)
