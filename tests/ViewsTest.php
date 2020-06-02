@@ -128,7 +128,7 @@ class ViewsTest extends TestCase
         $this->assertEquals('foo', $this->renderer->render('foo'));
     }
 
-    public function xtestSerialization()
+    public function testSerialization()
     {
         enableSerialization();
 
