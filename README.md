@@ -16,7 +16,7 @@ The full documentation for this library can be found [here][documentation].
 
 ## License
 
-**Opis View** is licensed under the [Apache License, Version 2.0][apache_license].
+**Opis View** is licensed under the [Apache License, Version 2.0][license].
 
 ## Requirements
 
@@ -43,7 +43,7 @@ Or you could directly reference it into your `composer.json` file as a dependenc
 ```
 
 [documentation]: https://opis.io/view
-[apache_license]: https://www.apache.org/licenses/LICENSE-2.0 "Apache License"
+[license]: https://www.apache.org/licenses/LICENSE-2.0 "Apache License"
 [Packagist]: https://packagist.org/packages/opis/view "Packagist"
 [Composer]: https://getcomposer.org "Composer"
 [Opis Utils]: https://github.com/opis/utils "Opis Utils"
