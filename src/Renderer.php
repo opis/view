@@ -24,7 +24,7 @@ class Renderer extends SortableList
     private array $cache = [];
     private EngineResolver $resolver;
     private Engine $defaultEngine;
-    private RegexBuilder $regexBuilder;
+    private ?RegexBuilder $regexBuilder = null;
 
     public function __construct(?Engine $engine = null)
     {
@@ -34,7 +34,6 @@ class Renderer extends SortableList
 
         $this->resolver = new EngineResolver($this);
         $this->defaultEngine = $engine;
-        $this->setRegexBuilder();
     }
 
     /**
@@ -62,6 +61,13 @@ class Renderer extends SortableList
      */
     public function getRegexBuilder(): RegexBuilder
     {
+        if ($this->regexBuilder === null) {
+            $this->regexBuilder = new RegexBuilder([
+                RegexBuilder::SEPARATOR_SYMBOL => '.',
+                RegexBuilder::CAPTURE_MODE => RegexBuilder::CAPTURE_LEFT,
+            ]);
+        }
+
         return $this->regexBuilder;
     }
 
@@ -143,7 +149,6 @@ class Renderer extends SortableList
 
     public function __unserialize(array $data): void
     {
-        $this->setRegexBuilder();
         $this->resolver = $data['resolver'];
         $this->defaultEngine = $data['defaultEngine'];
         parent::__unserialize($data['parent']);
@@ -155,7 +160,7 @@ class Renderer extends SortableList
         foreach ($this->getValues() as $handler) {
             if (preg_match($handler->getRegex(), $name)) {
                 $resolver = new ArgumentResolver();
-                $resolver->addValues($this->regexBuilder->getValues($handler->getRegex(), $name));
+                $resolver->addValues($this->getRegexBuilder()->getValues($handler->getRegex(), $name));
                 if (null !== $filter = $handler->getFilter()) {
                     $arguments = $resolver->resolve($filter);
                     if (!(bool)$filter(...$arguments)) {
@@ -169,13 +174,5 @@ class Renderer extends SortableList
         }
 
         return null;
-    }
-
-    private function setRegexBuilder(): void
-    {
-        $this->regexBuilder = new RegexBuilder([
-            RegexBuilder::SEPARATOR_SYMBOL => '.',
-            RegexBuilder::CAPTURE_MODE => RegexBuilder::CAPTURE_LEFT,
-        ]);
     }
 }
