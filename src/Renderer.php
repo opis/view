@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2018 Zindex Software
+ * Copyright 2018-2020 Zindex Software
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ class Renderer extends SortableList
     private Engine $defaultEngine;
     private RegexBuilder $regexBuilder;
 
-    public function __construct(Engine $engine = null)
+    public function __construct(?Engine $engine = null)
     {
         if ($engine === null) {
             $engine = new PHPEngine();
@@ -34,10 +34,7 @@ class Renderer extends SortableList
 
         $this->resolver = new EngineResolver($this);
         $this->defaultEngine = $engine;
-        $this->regexBuilder = new RegexBuilder([
-            RegexBuilder::SEPARATOR_SYMBOL => '.',
-            RegexBuilder::CAPTURE_MODE => RegexBuilder::CAPTURE_LEFT,
-        ]);
+        $this->setRegexBuilder();
     }
 
     /**
@@ -140,16 +137,15 @@ class Renderer extends SortableList
         return [
             'resolver' => $this->resolver,
             'defaultEngine' => $this->defaultEngine,
-            'regexBuilder' => $this->regexBuilder,
             'parent' => parent::__serialize(),
         ];
     }
 
     public function __unserialize(array $data): void
     {
+        $this->setRegexBuilder();
         $this->resolver = $data['resolver'];
         $this->defaultEngine = $data['defaultEngine'];
-        $this->regexBuilder = $data['regexBuilder'];
         parent::__unserialize($data['parent']);
     }
 
@@ -173,5 +169,13 @@ class Renderer extends SortableList
         }
 
         return null;
+    }
+
+    private function setRegexBuilder(): void
+    {
+        $this->regexBuilder = new RegexBuilder([
+            RegexBuilder::SEPARATOR_SYMBOL => '.',
+            RegexBuilder::CAPTURE_MODE => RegexBuilder::CAPTURE_LEFT,
+        ]);
     }
 }

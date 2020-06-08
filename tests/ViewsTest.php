@@ -146,6 +146,6 @@ class ViewsTest extends TestCase
 
         $renderer = unserialize(serialize($this->renderer));
 
-        $this->assertEquals('BAR', $this->renderer->renderView('foo'));
+        $this->assertEquals('BAR', $renderer->renderView('foo'));
     }
 }

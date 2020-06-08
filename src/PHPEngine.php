@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2018 Zindex Software
+ * Copyright 2018-2020 Zindex Software
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 
 namespace Opis\View;
 
-use Exception;
+use Throwable;
 
 class PHPEngine implements Engine
 {
@@ -28,7 +28,7 @@ class PHPEngine implements Engine
      * @param   array $vars
      *
      * @return  string
-     * @throws Exception
+     * @throws Throwable
      */
     public function build(string $path, array $vars = []): string
     {
@@ -44,7 +44,7 @@ class PHPEngine implements Engine
         try {
             /** @noinspection PhpIncludeInspection */
             include ${'#path'};
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             ob_get_clean();
             throw $e;
         }

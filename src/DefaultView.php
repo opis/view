@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2018 Zindex Software
+ * Copyright 2018-2020 Zindex Software
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,9 @@ namespace Opis\View;
 
 class DefaultView implements View
 {
-    /** @var    string */
-    protected $name;
 
-    /** @var    array */
-    protected $vars;
+    protected string $name;
+    protected array $vars;
 
     /**
      * Constructor

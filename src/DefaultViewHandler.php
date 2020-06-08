@@ -63,9 +63,7 @@ class DefaultViewHandler implements ViewHandler
 
         $delimiter = $this->renderer->getRegexBuilder()->getOptions()[RegexBuilder::REGEX_DELIMITER];
 
-        $value = implode('|', array_map(function ($value) use ($delimiter) {
-            return preg_quote($value, $delimiter);
-        }, $values));
+        $value = implode('|', array_map(static fn ($value) => preg_quote($value, $delimiter), $values));
 
         return $this->where($name, $value);
     }
