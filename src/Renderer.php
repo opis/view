@@ -28,12 +28,8 @@ class Renderer extends SortableList
 
     public function __construct(?Engine $engine = null)
     {
-        if ($engine === null) {
-            $engine = new PHPEngine();
-        }
-
         $this->resolver = new EngineResolver($this);
-        $this->defaultEngine = $engine;
+        $this->defaultEngine = $engine ?? new PHPEngine();
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /* ===========================================================================
- * Copyright 2018 Zindex Software
+ * Copyright 2018-2020 Zindex Software
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,13 @@
 
 namespace Opis\View\Test;
 
+use Opis\Closure\SerializableClosure;
 use Opis\View\Renderer;
-use Opis\View\Engine;
 use PHPUnit\Framework\TestCase;
-use function Opis\Closure\init as enableSerialization;
 
 class ViewsTest extends TestCase
 {
-    /** @var Renderer  */
-    protected $renderer;
+    protected Renderer $renderer;
 
     public function setUp(): void
     {
@@ -34,9 +32,7 @@ class ViewsTest extends TestCase
 
     public function testResolve()
     {
-        $this->renderer->handle('foo', function () {
-            return 'bar';
-        });
+        $this->renderer->handle('foo', static fn() => 'bar');
 
         $this->assertEquals('bar', $this->renderer->resolveViewName('foo'));
     }
@@ -48,77 +44,51 @@ class ViewsTest extends TestCase
 
     public function testResolveMultiple()
     {
-        $this->renderer->handle('foo', function () {
-            return 'bar';
-        });
+        $this->renderer->handle('foo', static fn() => 'bar');
 
-        $this->renderer->handle('foo', function () {
-            return 'baz';
-        });
+        $this->renderer->handle('foo', static fn() => 'baz');
 
-        $this->renderer->handle('foo', function () {
-            return 'qux';
-        });
+        $this->renderer->handle('foo', static fn() => 'qux');
 
         $this->assertEquals('qux', $this->renderer->resolveViewName('foo'));
     }
 
     public function testResolvePriority()
     {
-        $this->renderer->handle('foo', function () {
-            return 'bar';
-        }, 1);
+        $this->renderer->handle('foo', static fn() => 'bar', 1);
 
-        $this->renderer->handle('foo', function () {
-            return 'baz';
-        });
+        $this->renderer->handle('foo', static fn() => 'baz');
 
         $this->assertEquals('bar', $this->renderer->resolveViewName('foo'));
     }
 
     public function testEngine()
     {
-        $this->renderer->getEngineResolver()->register(function () {
-            return new ViewEngine1();
-        });
+        $this->renderer->getEngineResolver()->register(static fn() => new ViewEngine1());
 
-        $this->renderer->handle('foo', function () {
-            return 'bar';
-        });
+        $this->renderer->handle('foo', static fn() => 'bar');
 
         $this->assertEquals('BAR', $this->renderer->renderView('foo'));
     }
 
     public function testEnginePriority1()
     {
-        $this->renderer->getEngineResolver()->register(function () {
-            return new ViewEngine1();
-        });
+        $this->renderer->getEngineResolver()->register(static fn() => new ViewEngine1());
 
-        $this->renderer->getEngineResolver()->register(function () {
-            return new ViewEngine2();
-        });
+        $this->renderer->getEngineResolver()->register(static fn() => new ViewEngine2());
 
-        $this->renderer->handle('foo', function () {
-            return 'bar';
-        });
+        $this->renderer->handle('foo', static fn() => 'bar');
 
         $this->assertEquals('BAR!', $this->renderer->renderView('foo'));
     }
 
     public function testEnginePriority2()
     {
-        $this->renderer->getEngineResolver()->register(function () {
-            return new ViewEngine1();
-        }, 1);
+        $this->renderer->getEngineResolver()->register(static fn() => new ViewEngine1(), 1);
 
-        $this->renderer->getEngineResolver()->register(function () {
-            return new ViewEngine2();
-        });
+        $this->renderer->getEngineResolver()->register(static fn() => new ViewEngine2());
 
-        $this->renderer->handle('foo', function () {
-            return 'bar';
-        });
+        $this->renderer->handle('foo', static fn() => 'bar');
 
         $this->assertEquals('BAR', $this->renderer->renderView('foo'));
     }
@@ -130,19 +100,13 @@ class ViewsTest extends TestCase
 
     public function testSerialization()
     {
-        enableSerialization();
+        SerializableClosure::init();
 
-        $this->renderer->getEngineResolver()->register(function () {
-            return new ViewEngine1();
-        }, 1);
+        $this->renderer->getEngineResolver()->register(static fn() => new ViewEngine1(), 1);
 
-        $this->renderer->getEngineResolver()->register(function () {
-            return new ViewEngine2();
-        });
+        $this->renderer->getEngineResolver()->register(static fn() => new ViewEngine2());
 
-        $this->renderer->handle('foo', function () {
-            return 'bar';
-        });
+        $this->renderer->handle('foo', static fn() => 'bar');
 
         $renderer = unserialize(serialize($this->renderer));
 
