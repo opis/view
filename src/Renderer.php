@@ -28,6 +28,7 @@ class Renderer extends SortableList
 
     public function __construct(?Engine $engine = null)
     {
+        parent::__construct([], true, true);
         $this->resolver = new EngineResolver($this);
         $this->defaultEngine = $engine ?? new PHPEngine();
     }

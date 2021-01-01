@@ -32,6 +32,7 @@ class EngineResolver extends SortableList
      */
     public function __construct(Renderer $renderer)
     {
+        parent::__construct([], true, true);
         $this->renderer = $renderer;
     }
 
